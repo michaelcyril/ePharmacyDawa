@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/product_card_widget.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/product/add_otc_medicine.dart';
 
 class PharmacistOtcMedicinesScreen extends StatefulWidget {
   const PharmacistOtcMedicinesScreen({super.key});
@@ -72,6 +73,17 @@ class _PharmacistOtcMedicinesScreenScreenState
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.indigo.withOpacity(0.3),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddOTCMedicinePage(),
+              ));
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

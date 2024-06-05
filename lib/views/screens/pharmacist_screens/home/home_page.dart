@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/disease/desease_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/home/component/home_card.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/orders_page.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/prescriptions_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/product/otc_medicines_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/product/prescription_medicines_page.dart';
 
@@ -109,7 +112,14 @@ class _PharmacistHomePageScreenState extends State<PharmacistHomePageScreen> {
                     gradientEndColor: const Color(0xffF6815B),
                   ),
                   DiscoverSmallCard(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const OrdersPagePharmacistScreen(),
+                          ));
+                    },
                     title: "Order History",
                     gradientStartColor: const Color(0xffe8eaf6),
                     gradientEndColor: const Color(0xffF0B31A),
@@ -121,14 +131,27 @@ class _PharmacistHomePageScreenState extends State<PharmacistHomePageScreen> {
                     gradientEndColor: const Color(0xffe1bee7),
                   ),
                   DiscoverSmallCard(
-                    onTap: () {},
-                    title: "Diseases",
-                  ),
-                  DiscoverSmallCard(
-                    onTap: () {},
-                    title: "Others",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const PrescriptionPagePharmacistScreen(),
+                          ));
+                    },
+                    title: "Prescription History",
                     gradientStartColor: const Color(0xffe8eaf6),
                     gradientEndColor: const Color(0xff90a4ae),
+                  ),
+                  DiscoverSmallCard(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DiseasePageScreen(),
+                          ));
+                    },
+                    title: "Diseases",
                   ),
                 ],
               ),

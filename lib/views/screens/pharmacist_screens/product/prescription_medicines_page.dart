@@ -73,6 +73,13 @@ class _PharmacistPrescriptionMedicinesPageState
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.indigo.withOpacity(0.3),
+        onPressed: () {
+          print("object");
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

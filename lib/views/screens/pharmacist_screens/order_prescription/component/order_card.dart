@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/order_details_page.dart';
 
-class OrderCardWidget extends StatefulWidget {
-  const OrderCardWidget(
+class OrderCardPharmacistWidget extends StatefulWidget {
+  const OrderCardPharmacistWidget(
       {super.key,
       required this.mainText,
       required this.orderNo,
@@ -20,10 +20,10 @@ class OrderCardWidget extends StatefulWidget {
   final String confirmation;
 
   @override
-  State<OrderCardWidget> createState() => _OrderCardWidgetState();
+  State<OrderCardPharmacistWidget> createState() => _OrderCardWidgetState();
 }
 
-class _OrderCardWidgetState extends State<OrderCardWidget> {
+class _OrderCardWidgetState extends State<OrderCardPharmacistWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

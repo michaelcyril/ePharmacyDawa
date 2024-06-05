@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'component/order_card.dart';
-
-class PrescriptionPagePharmacistScreen extends StatefulWidget {
-  const PrescriptionPagePharmacistScreen({super.key});
+class OrderRequestPage extends StatefulWidget {
+  const OrderRequestPage({super.key});
 
   @override
-  State<PrescriptionPagePharmacistScreen> createState() => _PrescriptionPageScreenState();
+  State<OrderRequestPage> createState() => _OrderRequestPageState();
 }
 
-class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScreen> {
+class _OrderRequestPageState extends State<OrderRequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // automaticallyImplyLeading: false,
         title: const Text(
-          "Prescriptions",
+          "Orders Requests",
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -38,20 +36,6 @@ class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScree
               ],
             ),
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [1, 2, 3, 4]
-              .map<Widget>((e) => const OrderCardPharmacistWidget(
-                    confirmation: "Pending",
-                    mainText: "Prescription 1",
-                    orderNo: "ID8239",
-                    date: "10/04/2024",
-                    time: "10:30 AM",
-                    image: "assets/images/pharmacist3.png",
-                  ))
-              .toList(),
         ),
       ),
 

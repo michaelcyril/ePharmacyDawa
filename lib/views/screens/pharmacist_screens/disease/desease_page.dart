@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/disease/component/disease_widget.dart';
 
-import 'component/order_card.dart';
-
-class PrescriptionPagePharmacistScreen extends StatefulWidget {
-  const PrescriptionPagePharmacistScreen({super.key});
+class DiseasePageScreen extends StatefulWidget {
+  const DiseasePageScreen({super.key});
 
   @override
-  State<PrescriptionPagePharmacistScreen> createState() => _PrescriptionPageScreenState();
+  State<DiseasePageScreen> createState() => _DiseasePageScreenState();
 }
 
-class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScreen> {
+class _DiseasePageScreenState extends State<DiseasePageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // automaticallyImplyLeading: false,
         title: const Text(
-          "Prescriptions",
+          "Diseases",
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -40,21 +39,24 @@ class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScree
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [1, 2, 3, 4]
-              .map<Widget>((e) => const OrderCardPharmacistWidget(
-                    confirmation: "Pending",
-                    mainText: "Prescription 1",
-                    orderNo: "ID8239",
-                    date: "10/04/2024",
-                    time: "10:30 AM",
-                    image: "assets/images/pharmacist3.png",
-                  ))
-              .toList(),
-        ),
+      body: ListView(
+        children: [1, 23, 4]
+            .map<Widget>(
+              (e) => const DiseaseWidgetCard(
+                image: "assets/images/dengue.jpg",
+                category: "Dengue",
+                numOfMeds: 18,
+              ),
+            )
+            .toList(),
       ),
-
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.indigo.withOpacity(0.3),
+        onPressed: () {
+          print("object");
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

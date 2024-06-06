@@ -6,8 +6,8 @@ class AppConstants {
   static const String token = 'token';
   static const String user = 'user';
 
-  // static List<LanguageModel> languages = [
-  //   LanguageModel(imageUrl: Images.unitedKingdom, languageName: 'English', countryCode: 'US', languageCode: 'en'),
-  //   LanguageModel(imageUrl: Images.arabic, languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
-  // ];
+  static const String apiBaseUrl = 'http://192.168.0.101:8000/';
+  static const String mediaBaseUrl = 'http://192.168.0.101:8000';
+  static const String verifyPhoneUrl = 'cargo/api/request-otp';
+  static const String verifyOtpUrl = 'cargo/api/verify-otp';
 }

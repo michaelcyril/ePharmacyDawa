@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter_project_template/constants/app_constants.dart';
 
 class ApiClientDio {
-  final String baseUrl;
+  String baseUrl = AppConstants.apiBaseUrl;
+
   final Dio dio;
 
-  ApiClientDio({required this.baseUrl}) : dio = Dio(BaseOptions(baseUrl: baseUrl));
+  ApiClientDio() : dio = Dio(BaseOptions());
 
   Future<dynamic> getRequest(String endpoint) async {
     try {
@@ -18,7 +20,8 @@ class ApiClientDio {
 
   Future<dynamic> postRequest(String endpoint, dynamic data) async {
     try {
-      final response = await dio.post(endpoint, data: data);
+      FormData formData = FormData.fromMap(data);
+      final response = await dio.post(baseUrl + endpoint, data: formData);
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Failed to perform POST request: $e');
@@ -43,9 +46,11 @@ class ApiClientDio {
     }
   }
 
-  Future<dynamic> postWithFile(String endpoint, Map<String, dynamic> data, File file) async {
+  Future<dynamic> postWithFile(
+      String endpoint, Map<String, dynamic> data, File file) async {
     try {
-      final formData = FormData.fromMap({...data, 'file': await MultipartFile.fromFile(file.path)});
+      final formData = FormData.fromMap(
+          {...data, 'file': await MultipartFile.fromFile(file.path)});
       final response = await dio.post(endpoint, data: formData);
       return _handleResponse(response);
     } catch (e) {
@@ -57,7 +62,8 @@ class ApiClientDio {
     if (response.statusCode == 200) {
       return response.data;
     } else {
-      throw Exception('Failed with status code ${response.statusCode}: ${response.data}');
+      throw Exception(
+          'Failed with status code ${response.statusCode}: ${response.data}');
     }
   }
 }

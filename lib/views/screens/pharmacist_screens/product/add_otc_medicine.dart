@@ -1,7 +1,11 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, prefer_typing_uninitialized_variables
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/constants/app_colors.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/menu/normal_user_bottom_nav.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AddOTCMedicinePage extends StatefulWidget {
@@ -12,6 +16,22 @@ class AddOTCMedicinePage extends StatefulWidget {
 }
 
 class _AddOTCMedicinePageState extends State<AddOTCMedicinePage> {
+  String? choosenCategory;
+  var categories;
+  final ImagePicker imgpicker = ImagePicker();
+  XFile? imagefile;
+
+  openImages() async {
+    try {
+      var pickedfile = await imgpicker.pickImage(source: ImageSource.gallery);
+      if (pickedfile != null) {
+        setState(() {
+          imagefile = pickedfile;
+        });
+      } else {}
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -89,7 +109,7 @@ class _AddOTCMedicinePageState extends State<AddOTCMedicinePage> {
                         .start, // Aligns children to the start (left) of the row
                     children: [
                       Text(
-                        "GENDER",
+                        "DISEASE",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black87,
@@ -100,41 +120,92 @@ class _AddOTCMedicinePageState extends State<AddOTCMedicinePage> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                Center(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white70,
-                        filled: true,
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                Container(
+                padding: const EdgeInsets.only(
+                    left: 10.0, right: 10.0, top: 0, bottom: 0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(12)),
+                child: categories == null
+                    ? DropdownButton<String>(
+                        value: choosenCategory,
+                        hint: const Text('Select Disease'),
+                        dropdownColor: Colors.white,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        iconSize: 36,
+                        isExpanded: true,
+                        underline: const SizedBox(),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 15),
+                        items: const [],
+                        onChanged: (String? value) {
+                          setState(() {
+                            choosenCategory = value;
+                          });
+                        },
+                      )
+                    : DropdownButton<String>(
+                        value: choosenCategory,
+                        hint: const Text('Select Category'),
+                        dropdownColor: Colors.white,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        iconSize: 36,
+                        isExpanded: true,
+                        underline: const SizedBox(),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 15),
+                        items: categories
+                            .map<DropdownMenuItem<String>>((var value) {
+                          return DropdownMenuItem<String>(
+                            value: value['id'],
+                            child: Text(value['name']),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            choosenCategory = value;
+                          });
+                        },
                       ),
-                      value: 'Male', // Default value
-                      onChanged: (String? newValue) {
-                        // Handle the gender change
-                      },
-                      items: <String>['Male', 'Female']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+              ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MaterialButton(
+                  elevation: 0,
+                  color: AppColors.primaryColor,
+                  height: 50,
+                  minWidth: 500,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  onPressed: () {
+                    openImages();
+                  },
+                  child: const Text(
+                    'Upload Images',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+                const Divider(),
+                imagefile != null
+                    ? Card(
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Image.file(File(imagefile!.path)),
+                        ),
+                      )
+                    : Container(),
+                const SizedBox(height: 5),
                 const SizedBox(
                   height: 10,
                 ),
                 const Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment
-                        .start, // Aligns children to the start (left) of the row
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "DESCRIPTION",

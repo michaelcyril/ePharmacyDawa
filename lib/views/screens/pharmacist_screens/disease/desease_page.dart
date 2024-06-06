@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/disease/add_desease_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/disease/component/disease_widget.dart';
 
 class DiseasePageScreen extends StatefulWidget {
@@ -53,7 +54,11 @@ class _DiseasePageScreenState extends State<DiseasePageScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.indigo.withOpacity(0.3),
         onPressed: () {
-          print("object");
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddDiseasePage(),
+              ));
         },
         child: const Icon(Icons.add),
       ),

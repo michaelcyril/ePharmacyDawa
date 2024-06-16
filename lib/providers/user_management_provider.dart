@@ -23,49 +23,111 @@ class UserManagementProvider with ChangeNotifier {
     return true;
   }
 
-  Future<Map<String, dynamic>> verifyPhone(ctx, data) async {
+  Future<bool> verifyPhone(ctx, data) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
       }).postRequest(AppConstants.verifyPhoneUrl, data);
       if (res == null) {
-        return {};
+        return false;
       } else {
         var body = res;
         print(body);
-        if (body.containsKey('customer')) {
-          // var sharedPref = SharedPreferencesManager();
-          // sharedPref.saveString(
-          //     AppConstants.customer, json.encode(body['customer']));
-          return body;
+        if (body('request')) {
+          return true;
         }
-        return {};
+        return false;
       }
     } catch (e) {
       debugPrint(e.toString());
-      return {};
+      return false;
     }
   }
 
-  Future<bool> verifyOtp(ctx, data) async {
+  Future<Map<String, dynamic>> verifyOtp(ctx, data) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
       }).postRequest(AppConstants.verifyOtpUrl, data);
       if (res == null) {
-        return false;
+        return {'success': false, 'message': 'Something went wrong'};
       } else {
         var body = res;
-        print(body.containsKey('success'));
-        if (body.containsKey('success')) {
+        if (body['success']) {
           var sharedPref = SharedPreferencesManager();
           sharedPref.saveString(AppConstants.user, json.encode(body['user']));
           sharedPref.saveString(AppConstants.token, json.encode(body['token']));
           setUserData();
+          return body;
+        }
+        return {'success': false, 'message': 'Something went wrong'};
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return {'success': false, 'message': 'Something went wrong'};
+    }
+  }
+
+  Future<Map<String, dynamic>> completeProfifile(ctx, data) async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).postRequest(AppConstants.cmpleteProfileUrl, data);
+      if (res == null) {
+        return {'update': false, 'message': 'Something went wrong'};
+      } else {
+        var body = res;
+        if (body['update']) {
+          var sharedPref = SharedPreferencesManager();
+          sharedPref.saveString(AppConstants.user, json.encode(body['user']));
+          sharedPref.saveString(AppConstants.token, json.encode(body['token']));
+          setUserData();
+          return body;
+        }
+        return {'update': false, 'message': 'Something went wrong'};
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return {'update': false, 'message': 'Something went wrong'};
+    }
+  }
+
+  Future<Map<String, dynamic>> registerUser(ctx, data) async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).postRequest(AppConstants.cmpleteProfileUrl, data);
+      if (res == null) {
+        return {'save': false, 'message': 'Something went wrong'};
+      } else {
+        var body = res;
+        if (body['save']) {
+          return body;
+        }
+        return {'save': false, 'message': 'Something went wrong'};
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return {'save': false, 'message': 'Something went wrong'};
+    }
+  }
+
+  Future<bool> getUsersList() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest(AppConstants.cmpleteProfileUrl);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          _userList = body;
+          notifyListeners();
           return true;
         }
-        return false;
       }
+      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;

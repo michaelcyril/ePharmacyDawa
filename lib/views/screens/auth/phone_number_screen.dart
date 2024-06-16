@@ -1,8 +1,9 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/views/screens/auth/otp_screen.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class PhoneNumberScreen extends StatefulWidget {
   const PhoneNumberScreen({super.key});
@@ -100,34 +101,22 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                   height: MediaQuery.of(context).size.height * 0.07,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       String inputNumber = textFieldController.text.trim();
-                      String pharmacistNumber = "769190100";
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.fade,
-                          child: const OtpScreen(),
-                        ),
-                      );
-                      if (inputNumber == pharmacistNumber) {
-                        // Navigate to pharmacist dashboard
-                        // Navigator.push(
-                        //   context,
-                        //   PageTransition(
-                        //     type: PageTransitionType.fade,
-                        //     child: SecretCodePage(),
-                        //   ),
-                        // );
-                      } else {
-                        // Proceed with regular user login flow
-                        // Navigator.push(
-                        //   context,
-                        //   PageTransition(
-                        //     type: PageTransitionType.fade,
-                        //     child: OTPVerification(),
-                        //   ),
-                        // );
+                      // String pharmacistNumber = "769190100";
+                      var data = {
+                        "phone": inputNumber,
+                      };
+                      bool result = await Provider.of<UserManagementProvider>(
+                              context,
+                              listen: false)
+                          .verifyPhone(context, data);
+                      if (result) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OtpScreen(phone: inputNumber,),
+                            ));
                       }
                     },
                     style: ElevatedButton.styleFrom(

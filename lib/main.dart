@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/default_provider.dart';
+import 'package:flutter_project_template/providers/disease_management_provider.dart';
+import 'package:flutter_project_template/providers/medicine_management_provider.dart';
+import 'package:flutter_project_template/providers/order_management_provider.dart';
+import 'package:flutter_project_template/providers/prescription_management_provider.dart';
 import 'package:flutter_project_template/views/base/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +12,10 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => DefaultProvider()),
+        ChangeNotifierProvider(create: (context) => DiseaseManagementProvider()),
+        ChangeNotifierProvider(create: (context) => PrescriptionManagementProvider()),
+        ChangeNotifierProvider(create: (context) => OrderManagementProvider()),
+        ChangeNotifierProvider(create: (context) => MedicineManagementProvider()),
       ],
       child: const MyApp(),
     ),

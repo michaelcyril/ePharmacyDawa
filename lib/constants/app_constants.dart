@@ -10,4 +10,6 @@ class AppConstants {
   static const String mediaBaseUrl = 'http://192.168.0.101:8000';
   static const String verifyPhoneUrl = 'cargo/api/request-otp';
   static const String verifyOtpUrl = 'cargo/api/verify-otp';
+  static const String cmpleteProfileUrl = 'cargo/api/verify-otp';
+  static const String addDiseaseUrl = 'cargo/api/verify-otp';
 }

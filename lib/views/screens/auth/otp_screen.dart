@@ -1,18 +1,23 @@
-// ignore_for_file: unused_import, sized_box_for_whitespace
+// ignore_for_file: unused_import, sized_box_for_whitespace, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/user_management_provider.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/menu/normal_user_bottom_nav.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/profile/complete_profile.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/menu/pharmacist_bottom_nav.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  final String phone;
+  const OtpScreen({super.key, required this.phone});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  TextEditingController otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,10 +74,12 @@ class _OtpScreenState extends State<OtpScreen> {
                 height: 25,
               ),
               TextField(
+                controller: otpController,
                 decoration: InputDecoration(
                   fillColor: Colors.white70,
                   filled: true,
-                  contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  contentPadding:
+                      const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                   hintText: "Enter OTP",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -93,7 +100,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         //   size: 18.0, // Adjust the size as needed
                         //   color: Colors.grey[900],
                         // ),
-                        const SizedBox(width: 4.0), // Adjust spacing between icon and text
+                        const SizedBox(
+                            width: 4.0), // Adjust spacing between icon and text
                         Text(
                           "Resend",
                           style: TextStyle(
@@ -117,21 +125,48 @@ class _OtpScreenState extends State<OtpScreen> {
                 height: MediaQuery.of(context).size.height * 0.07,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
+                  onPressed: () async {
+                    var data = {
+                      "phone": widget.phone,
+                      "otp": otpController.text,
+                    };
+                    Map<String, dynamic> res =
+                        await Provider.of<UserManagementProvider>(
                       context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: const PharmacistBottomNav(),
-                      ),
-                    );
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   PageTransition(
-                    //     type: PageTransitionType.fade,
-                    //     child: const CompleteProfileScreen(),
-                    //   ),
-                    // );
+                      listen: false,
+                    ).verifyOtp(context, data);
+                    if (res['success']) {
+                      if (res['gender'] == null) {
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: const CompleteProfileScreen(),
+                          ),
+                        );
+                      } else if (res['role'] == 'ADMIN') {
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: const PharmacistBottomNav(),
+                          ),
+                        );
+                      } else if (res['role'] == 'NORMAL') {
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: const NormalUserBottomNav(),
+                          ),
+                        );
+                      }
+                    } else {
+                      SnackBar(
+                        content: Text(res['message']),
+                        duration: const Duration(seconds: 3),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 3, 190, 150),

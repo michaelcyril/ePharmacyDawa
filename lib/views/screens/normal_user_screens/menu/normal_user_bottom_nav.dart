@@ -50,11 +50,6 @@ class _NormalUserBottomNavState extends State<NormalUserBottomNav> {
               selectedIcon: Icon(CupertinoIcons.bag_fill),
               label: 'Orders',
             ),
-            // NavigationDestination(
-            //   icon: Icon(CupertinoIcons.heart),
-            //   selectedIcon: Icon(CupertinoIcons.heart_fill),
-            //   label: 'Wishlist',
-            // ),
             NavigationDestination(
               icon: Icon(CupertinoIcons.captions_bubble),
               selectedIcon: Icon(CupertinoIcons.captions_bubble_fill),

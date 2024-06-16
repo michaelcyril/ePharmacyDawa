@@ -48,32 +48,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Image.asset("assets/images/panadol1.png"),
             ),
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     ...List.generate(
-          //       //image length
-          //       3,
-          //       (index) => GestureDetector(
-          //         onTap: () {},
-          //         child: AnimatedContainer(
-          //           duration: Duration(milliseconds: 250),
-          //           margin: const EdgeInsets.only(right: 16),
-          //           padding: const EdgeInsets.all(8),
-          //           height: 48,
-          //           width: 48,
-          //           decoration: BoxDecoration(
-          //             color: Colors.white,
-          //             borderRadius: BorderRadius.circular(10),
-          //             border:
-          //                 Border.all(color: Color(0xFFFF7643).withOpacity(0)),
-          //           ),
-          //           child: Image.asset("assets/images/panadol1.png"),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
           const SizedBox(height: 20,),
           Stack(
             children: [

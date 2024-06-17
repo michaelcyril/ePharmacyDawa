@@ -5,7 +5,13 @@ import 'package:flutter_project_template/constants/app_constants.dart';
 import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class MedicineManagementProvider with ChangeNotifier {
-  List<Map<String, dynamic>> order_list = [];
+  List<Map<String, dynamic>> medicine_list = [];
+  List<Map<String, dynamic>> otc_medicine_list = [];
+  List<Map<String, dynamic>> all_prescription_medicine = [];
+
+  List<Map<String, dynamic>> get getMedicineList => medicine_list;
+  List<Map<String, dynamic>> get getOtcMedicineList => otc_medicine_list;
+  List<Map<String, dynamic>> get getAllPrescriptionMedicineList => all_prescription_medicine;
 
   Future<bool> getMedicines() async {
     try {
@@ -17,7 +23,7 @@ class MedicineManagementProvider with ChangeNotifier {
       } else {
         var body = res;
         if (body) {
-          order_list = body;
+          medicine_list = body;
           notifyListeners();
           return true;
         }
@@ -29,7 +35,73 @@ class MedicineManagementProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>> addMedicine(ctx, data) async {
+  Future<bool> getOtcMedicines() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest(AppConstants.addDiseaseUrl);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          otc_medicine_list = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getPrescriptionMedicines(deseaseId) async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest("${AppConstants.addDiseaseUrl}?id=$deseaseId");
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          medicine_list = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getAllPrescriptionMedicines() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest(AppConstants.addDiseaseUrl);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          medicine_list = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<Map<String, dynamic>> addMedicine(data) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',

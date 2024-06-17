@@ -43,16 +43,6 @@ class _PharmacistBottomNavBottomNavState extends State<PharmacistBottomNav> {
               selectedIcon: Icon(CupertinoIcons.house_fill),
               label: 'Home',
             ),
-            // NavigationDestination(
-            //   icon: Icon(CupertinoIcons.bag),
-            //   selectedIcon: Icon(CupertinoIcons.bag_fill),
-            //   label: 'Orders',
-            // ),
-            // NavigationDestination(
-            //   icon: Icon(CupertinoIcons.heart),
-            //   selectedIcon: Icon(CupertinoIcons.heart_fill),
-            //   label: 'Wishlist',
-            // ),
             NavigationDestination(
               icon: Icon(CupertinoIcons.captions_bubble),
               selectedIcon: Icon(CupertinoIcons.captions_bubble_fill),

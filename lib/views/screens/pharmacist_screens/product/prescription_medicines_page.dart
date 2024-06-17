@@ -1,7 +1,11 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/medicine_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/product_card_widget.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/product/product_details.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/product/add_prescription_medicine.dart';
+import 'package:provider/provider.dart';
 
 class PharmacistPrescriptionMedicinesPage extends StatefulWidget {
   const PharmacistPrescriptionMedicinesPage({super.key});
@@ -13,6 +17,15 @@ class PharmacistPrescriptionMedicinesPage extends StatefulWidget {
 
 class _PharmacistPrescriptionMedicinesPageState
     extends State<PharmacistPrescriptionMedicinesPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<MedicineManagementProvider>(
+      context,
+      listen: false,
+    ).getAllPrescriptionMedicines();
+  }
   var dawa_list = [1, 2, 3, 4];
   @override
   Widget build(BuildContext context) {
@@ -45,38 +58,49 @@ class _PharmacistPrescriptionMedicinesPageState
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: GridView.builder(
-            itemCount: dawa_list.length,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 0.7,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 16,
-            ),
-            itemBuilder: (context, index) => ProductCardWidget(
-              onPress: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => const ProductDetailsScreen(),
-                //     ));
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Consumer<MedicineManagementProvider>(
+              builder: (context, value, child) {
+                return value.getAllPrescriptionMedicineList.isEmpty
+                    ? const Center(child: Text("No Otc Medicines"))
+                    : GridView.builder(
+                        itemCount: value.getOtcMedicineList.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 0.7,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 16,
+                        ),
+                        itemBuilder: (context, index) => ProductCardWidget(
+                          onPress: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProductDetailsScreen(productData: value.getAllPrescriptionMedicineList[index],),
+                                ));
+                          },
+                          image: "assets/images/dawa1.png",
+                          title: value.getAllPrescriptionMedicineList[index]['name'],
+                          dosage: value.getAllPrescriptionMedicineList[index]['dosage'],
+                          price: value.getAllPrescriptionMedicineList[index]['price'],
+                          isFavorite: false,
+                          updateCartCount: (int) {},
+                          addToFavorites: () {},
+                        ),
+                      );
               },
-              image: "assets/images/dawa1.png",
-              title: "Panadol",
-              dosage: "400mg",
-              price: "200",
-              isFavorite: false,
-              updateCartCount: (int) {},
-              addToFavorites: () {},
-            ),
-          ),
-        ),
+            )),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.indigo.withOpacity(0.3),
         onPressed: () {
-          print("object");
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddPrescriptionMedicinePage(),
+              ));
         },
         child: const Icon(Icons.add),
       ),

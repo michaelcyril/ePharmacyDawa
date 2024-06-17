@@ -10,14 +10,14 @@ import 'package:flutter_project_template/providers/medicine_management_provider.
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class AddOTCMedicinePage extends StatefulWidget {
-  const AddOTCMedicinePage({super.key});
+class AddPrescriptionMedicinePage extends StatefulWidget {
+  const AddPrescriptionMedicinePage({super.key});
 
   @override
-  State<AddOTCMedicinePage> createState() => _AddOTCMedicinePageState();
+  State<AddPrescriptionMedicinePage> createState() => _AddOTCMedicinePageState();
 }
 
-class _AddOTCMedicinePageState extends State<AddOTCMedicinePage> {
+class _AddOTCMedicinePageState extends State<AddPrescriptionMedicinePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController dosageController = TextEditingController();
@@ -77,7 +77,7 @@ class _AddOTCMedicinePageState extends State<AddOTCMedicinePage> {
                 Center(
                   child: GestureDetector(
                     child: const Text(
-                      "Please Add Otc Medicine\nhere",
+                      "Please Add Prescription Medicine\nhere",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 19,
@@ -125,74 +125,6 @@ class _AddOTCMedicinePageState extends State<AddOTCMedicinePage> {
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment
-                        .start, // Aligns children to the start (left) of the row
-                    children: [
-                      Text(
-                        "DISEASE",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Container(
-                  padding: const EdgeInsets.only(
-                      left: 10.0, right: 10.0, top: 0, bottom: 0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(12)),
-                  child: deseaseList == null
-                      ? DropdownButton<String>(
-                          value: choosenDisease,
-                          hint: const Text('Select Disease'),
-                          dropdownColor: Colors.white,
-                          icon: const Icon(Icons.arrow_drop_down),
-                          iconSize: 36,
-                          isExpanded: true,
-                          underline: const SizedBox(),
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 15),
-                          items: const [],
-                          onChanged: (String? value) {
-                            setState(() {
-                              choosenDisease = value;
-                            });
-                          },
-                        )
-                      : DropdownButton<String>(
-                          value: choosenDisease,
-                          hint: const Text('Select Desease'),
-                          dropdownColor: Colors.white,
-                          icon: const Icon(Icons.arrow_drop_down),
-                          iconSize: 36,
-                          isExpanded: true,
-                          underline: const SizedBox(),
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 15),
-                          items: deseaseList
-                              .map<DropdownMenuItem<String>>((var value) {
-                            return DropdownMenuItem<String>(
-                              value: value['id'],
-                              child: Text(value['name']),
-                            );
-                          }).toList(),
-                          onChanged: (String? value) {
-                            setState(() {
-                              choosenDisease = value;
-                            });
-                          },
-                        ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -355,8 +287,7 @@ class _AddOTCMedicinePageState extends State<AddOTCMedicinePage> {
                         "name": nameController.text,
                         "description": descriptionController.text,
                         "dosage": dosageController.text,
-                        "desease": choosenDisease,
-                        "type": "DESEASE",
+                        "type": "OTP",
                         "price": priceController.text,
                         "image": await MultipartFile.fromFile(imagefile!.path,
                             filename: imagefile!.name),

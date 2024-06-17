@@ -7,6 +7,8 @@ import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 class DiseaseManagementProvider with ChangeNotifier {
   List<Map<String, dynamic>> disease_list = [];
 
+  List<Map<String, dynamic>> get getDiseaseList => disease_list;
+
   Future<bool> getDiseases() async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{

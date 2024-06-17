@@ -1,9 +1,10 @@
-// ignore_for_file: dead_code
+// ignore_for_file: dead_code, prefer_typing_uninitialized_variables, deprecated_member_use
 
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  final productData;
+  const ProductDetailsScreen({super.key, this.productData});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -60,20 +61,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
-                          "Panadol",
+                          widget.productData['name'],
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Padding(
-                    padding: EdgeInsets.only(
+                  Padding(
+                    padding: const EdgeInsets.only(
                       left: 20,
                       right: 64,
                     ),
                     child: Text(
-                      "Panadol is apopular dhdhdnhds dhsbhbsd dshbfdhs fshdhfhds shfdhsbhfsd shdbhbfnds ",
+                      widget.productData['description'],
                       maxLines: 3,
                     ),
                   ),
@@ -83,14 +84,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Dosage: 400mg', // Display dosage
-                          style: TextStyle(
+                        Text(
+                          'Dosage: ${widget.productData['dosage']}', // Display dosage
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          'Price: \Tsh 600.0', // Display price from product
+                          'Price: \Tsh ${widget.productData['price']}', // Display price from product
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.orange[800],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/disease_management_provider.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/disease/add_desease_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/disease/component/disease_widget.dart';
+import 'package:provider/provider.dart';
 
 class DiseasePageScreen extends StatefulWidget {
   const DiseasePageScreen({super.key});
@@ -10,6 +12,16 @@ class DiseasePageScreen extends StatefulWidget {
 }
 
 class _DiseasePageScreenState extends State<DiseasePageScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<DiseaseManagementProvider>(
+      context,
+      listen: false,
+    ).getDiseases();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,16 +52,22 @@ class _DiseasePageScreenState extends State<DiseasePageScreen> {
           ),
         ),
       ),
-      body: ListView(
-        children: [1, 23, 4]
-            .map<Widget>(
-              (e) => const DiseaseWidgetCard(
-                image: "assets/images/dengue.jpg",
-                category: "Dengue",
-                numOfMeds: 18,
-              ),
-            )
-            .toList(),
+      body: Consumer<DiseaseManagementProvider>(
+        builder: (context, value, child) {
+          return value.getDiseaseList.isEmpty
+              ? const Center(child: Text("No Order History"))
+              : ListView(
+                  children: value.getDiseaseList
+                      .map<Widget>(
+                        (e) => DiseaseWidgetCard(
+                          image: "assets/images/dengue.jpg",
+                          category: e['name'],
+                          numOfMeds: 18,
+                        ),
+                      )
+                      .toList(),
+                );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.indigo.withOpacity(0.3),

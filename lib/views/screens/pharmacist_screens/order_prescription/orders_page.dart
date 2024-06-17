@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/component/order_card.dart';
+import 'package:provider/provider.dart';
 
 class OrdersPagePharmacistScreen extends StatefulWidget {
   const OrdersPagePharmacistScreen({super.key});
@@ -9,6 +11,16 @@ class OrdersPagePharmacistScreen extends StatefulWidget {
 }
 
 class _OrdersPageScreenState extends State<OrdersPagePharmacistScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<OrderManagementProvider>(
+      context,
+      listen: false,
+    ).getOrderHistory();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,17 +51,23 @@ class _OrdersPageScreenState extends State<OrdersPagePharmacistScreen> {
           ),
         ),
       ),
-      body: ListView(
-        children: [1, 2, 3, 4]
-            .map<Widget>((e) => const OrderCardPharmacistWidget(
-                  confirmation: "Pending",
-                  mainText: "Prescription 1",
-                  orderNo: "ID8239",
-                  date: "10/04/2024",
-                  time: "10:30 AM",
-                  image: "assets/images/pharmacist3.png",
-                ))
-            .toList(),
+      body: Consumer<OrderManagementProvider>(
+        builder: (context, value, child) {
+          return value.getOrderHistoryList.isEmpty
+              ? const Center(child: Text("No Order History"))
+              : ListView(
+                  children: [1, 2, 3, 4]
+                      .map<Widget>((e) => const OrderCardPharmacistWidget(
+                            confirmation: "Pending",
+                            mainText: "Prescription 1",
+                            orderNo: "ID8239",
+                            date: "10/04/2024",
+                            time: "10:30 AM",
+                            image: "assets/images/pharmacist3.png",
+                          ))
+                      .toList(),
+                );
+        },
       ),
     );
   }

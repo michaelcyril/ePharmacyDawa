@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/prescription_management_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'component/order_card.dart';
 
@@ -10,6 +12,15 @@ class PrescriptionPagePharmacistScreen extends StatefulWidget {
 }
 
 class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<PrescriptionManagementProvider>(
+      context,
+      listen: false,
+    ).getPrescriptionList();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

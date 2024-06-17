@@ -6,6 +6,12 @@ import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class OrderManagementProvider with ChangeNotifier {
   List<Map<String, dynamic>> order_list = [];
+  List<Map<String, dynamic>> order_history_list = [];
+  List<Map<String, dynamic>> all_orderpending_list = [];
+
+  List<Map<String, dynamic>> get getOrderList => order_list;
+  List<Map<String, dynamic>> get getOrderHistoryList => order_history_list;
+  List<Map<String, dynamic>> get getAllOrderPendingList => all_orderpending_list;
 
   Future<bool> getOrders() async {
     try {
@@ -18,6 +24,50 @@ class OrderManagementProvider with ChangeNotifier {
         var body = res;
         if (body) {
           order_list = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getOrderHistory() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest(AppConstants.addDiseaseUrl);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          order_history_list = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getALlOrderPending() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest(AppConstants.addDiseaseUrl);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          all_orderpending_list = body;
           notifyListeners();
           return true;
         }

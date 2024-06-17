@@ -31,7 +31,7 @@ class DiseaseManagementProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>> addDisease(ctx, data) async {
+  Future<Map<String, dynamic>> addDisease(data) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',

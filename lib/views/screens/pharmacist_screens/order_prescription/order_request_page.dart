@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/order_management_provider.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/component/order_card.dart';
+import 'package:provider/provider.dart';
 
 class OrderRequestPage extends StatefulWidget {
   const OrderRequestPage({super.key});
@@ -8,6 +11,16 @@ class OrderRequestPage extends StatefulWidget {
 }
 
 class _OrderRequestPageState extends State<OrderRequestPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<OrderManagementProvider>(
+      context,
+      listen: false,
+    ).getALlOrderPending();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +51,24 @@ class _OrderRequestPageState extends State<OrderRequestPage> {
           ),
         ),
       ),
-
+      body: Consumer<OrderManagementProvider>(
+        builder: (context, value, child) {
+          return value.getAllOrderPendingList.isEmpty
+              ? const Center(child: Text("No Order Requests"))
+              : ListView(
+                  children: [1, 2, 3, 4]
+                      .map<Widget>((e) => const OrderCardPharmacistWidget(
+                            confirmation: "Pending",
+                            mainText: "Prescription 1",
+                            orderNo: "ID8239",
+                            date: "10/04/2024",
+                            time: "10:30 AM",
+                            image: "assets/images/pharmacist3.png",
+                          ))
+                      .toList(),
+                );
+        },
+      ),
     );
   }
 }

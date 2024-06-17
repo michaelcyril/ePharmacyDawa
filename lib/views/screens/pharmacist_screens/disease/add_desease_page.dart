@@ -1,8 +1,8 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/menu/normal_user_bottom_nav.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:flutter_project_template/providers/disease_management_provider.dart';
+import 'package:provider/provider.dart';
 
 class AddDiseasePage extends StatefulWidget {
   const AddDiseasePage({super.key});
@@ -12,6 +12,8 @@ class AddDiseasePage extends StatefulWidget {
 }
 
 class _AddDiseasePageState extends State<AddDiseasePage> {
+  TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -68,14 +70,22 @@ class _AddDiseasePageState extends State<AddDiseasePage> {
                   height: MediaQuery.of(context).size.height * 0.06,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.fade,
-                          child: const NormalUserBottomNav(),
-                        ),
-                      );
+                    onPressed: () async {
+                      var data = {
+                        "name": nameController.text,
+                      };
+                      Map<String, dynamic> res =
+                          await Provider.of<DiseaseManagementProvider>(context,
+                                  listen: false)
+                              .addDisease(data);
+                      if (res['save']) {
+                        Navigator.pop(context);
+                      } else {
+                        SnackBar(
+                          content: Text(res['message']),
+                          duration: const Duration(seconds: 3),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 3, 190, 150),

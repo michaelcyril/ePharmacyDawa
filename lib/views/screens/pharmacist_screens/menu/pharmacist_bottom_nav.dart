@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/profile/profile_page.dart';
+import 'package:flutter_project_template/views/screens/profile/profile_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/home/home_page.dart';
 
 class PharmacistBottomNav extends StatefulWidget {

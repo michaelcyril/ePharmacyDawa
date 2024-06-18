@@ -8,10 +8,12 @@ class PrescriptionPagePharmacistScreen extends StatefulWidget {
   const PrescriptionPagePharmacistScreen({super.key});
 
   @override
-  State<PrescriptionPagePharmacistScreen> createState() => _PrescriptionPageScreenState();
+  State<PrescriptionPagePharmacistScreen> createState() =>
+      _PrescriptionPageScreenState();
 }
 
-class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScreen> {
+class _PrescriptionPageScreenState
+    extends State<PrescriptionPagePharmacistScreen> {
   @override
   void initState() {
     super.initState();
@@ -19,8 +21,9 @@ class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScree
     Provider.of<PrescriptionManagementProvider>(
       context,
       listen: false,
-    ).getPrescriptionList();
+    ).getPrescription();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,21 +54,27 @@ class _PrescriptionPageScreenState extends State<PrescriptionPagePharmacistScree
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [1, 2, 3, 4]
-              .map<Widget>((e) => const OrderCardPharmacistWidget(
-                    confirmation: "Pending",
-                    mainText: "Prescription 1",
-                    orderNo: "ID8239",
-                    date: "10/04/2024",
-                    time: "10:30 AM",
-                    image: "assets/images/pharmacist3.png",
-                  ))
-              .toList(),
-        ),
+      body: Consumer<PrescriptionManagementProvider>(
+        builder: (context, value, child) {
+          return value.getPrescriptionList.isEmpty
+              ? const Center(child: Text("No Order History"))
+              : SingleChildScrollView(
+                  child: Column(
+                    children: value.getPrescriptionList
+                        .map<Widget>((e) => OrderCardPharmacistWidget(
+                              prescription: e,
+                              confirmation: "Pending",
+                              mainText: "Prescription 1",
+                              orderNo: "ID8239",
+                              date: "10/04/2024",
+                              time: "10:30 AM",
+                              image: "assets/images/pharmacist3.png",
+                            ))
+                        .toList(),
+                  ),
+                );
+        },
       ),
-
     );
   }
 }

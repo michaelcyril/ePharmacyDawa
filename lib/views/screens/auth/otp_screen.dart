@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/menu/normal_user_bottom_nav.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/profile/complete_profile.dart';
+import 'package:flutter_project_template/views/screens/profile/complete_profile.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/menu/pharmacist_bottom_nav.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';

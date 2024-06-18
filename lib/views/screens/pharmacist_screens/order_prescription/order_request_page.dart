@@ -56,7 +56,7 @@ class _OrderRequestPageState extends State<OrderRequestPage> {
           return value.getAllOrderPendingList.isEmpty
               ? const Center(child: Text("No Order Requests"))
               : ListView(
-                  children: [1, 2, 3, 4]
+                  children: value.getAllOrderPendingList
                       .map<Widget>((e) => const OrderCardPharmacistWidget(
                             confirmation: "Pending",
                             mainText: "Prescription 1",

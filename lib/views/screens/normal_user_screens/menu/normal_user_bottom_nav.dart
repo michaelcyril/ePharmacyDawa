@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/home_page.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/order_page.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/profile/profile_page.dart';
+import 'package:flutter_project_template/views/screens/profile/profile_page.dart';
 
 class NormalUserBottomNav extends StatefulWidget {
   const NormalUserBottomNav({super.key});

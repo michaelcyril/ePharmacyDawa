@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/order_details_page.dart';
@@ -11,7 +11,9 @@ class OrderCardPharmacistWidget extends StatefulWidget {
       required this.image,
       required this.date,
       required this.time,
-      required this.confirmation});
+      required this.confirmation,
+      this.prescription});
+  final prescription;
   final String mainText;
   final String orderNo;
   final String image;
@@ -130,7 +132,12 @@ class _OrderCardWidgetState extends State<OrderCardPharmacistWidget> {
                         padding: const EdgeInsets.only(left: 10),
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const OrderDetailsPageScreen(),));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const OrderDetailsPageScreen(),
+                                ));
                           },
                           child: Container(
                             height: 40,

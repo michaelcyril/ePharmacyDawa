@@ -7,9 +7,12 @@ import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class PrescriptionManagementProvider with ChangeNotifier {
   List<Map<String, dynamic>> prescription_list = [];
-  get prescriptionList => prescription_list;
+  List<Map<String, dynamic>> individual_prescription_list = [];
 
-  Future<bool> getPrescriptionList() async {
+  get getPrescriptionList => prescription_list;
+  get getIndividualPrescriptionList => individual_prescription_list;
+
+  Future<bool> getPrescription() async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
@@ -20,6 +23,28 @@ class PrescriptionManagementProvider with ChangeNotifier {
         var body = res;
         if (body) {
           prescription_list = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getIndividualPrescription() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest(AppConstants.addDiseaseUrl);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          individual_prescription_list = body;
           notifyListeners();
           return true;
         }

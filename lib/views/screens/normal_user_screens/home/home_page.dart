@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/disease_management_provider.dart';
+import 'package:flutter_project_template/providers/medicine_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/cart/cart_page.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/product_card_widget.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/tropical_disease_card.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_project_template/views/screens/normal_user_screens/produ
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/otc_products.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/product_details.dart';
 import 'package:flutter_project_template/widget/icon_buttom_with_counter.dart';
+import 'package:provider/provider.dart';
 
 class HomePageNormalUserScreen extends StatefulWidget {
   const HomePageNormalUserScreen({super.key});
@@ -18,6 +21,19 @@ class HomePageNormalUserScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageNormalUserScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<DiseaseManagementProvider>(
+      context,
+      listen: false,
+    ).getDiseases();
+    Provider.of<MedicineManagementProvider>(
+      context,
+      listen: false,
+    ).getOtcMedicines();
+  }
+
   var desease_list = [1, 2, 3, 4];
   var knowledge_list = [1, 2, 3, 4];
   var otc_medicine_list = [1, 2, 3, 4];
@@ -284,25 +300,42 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: desease_list
-                  .map(
-                    (e) => TropoicalDiseaseWidget(
-                      image: "assets/images/Malaria.jpg",
-                      category: "Malaria",
-                      numOfMeds: 18,
-                      press: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const DiseaseProductPage(),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                  .toList(),
-            ),
+            child: Consumer<DiseaseManagementProvider>(
+                builder: (context, value, child) {
+              return value.getDiseaseList.isEmpty
+                  ? Row(
+                      children: [1, 2]
+                          .map(
+                            (e) => TropoicalDiseaseWidget(
+                              image: "assets/images/Malaria.jpg",
+                              category: "",
+                              numOfMeds: 18,
+                              press: () {},
+                            ),
+                          )
+                          .toList(),
+                    )
+                  : Row(
+                      children: desease_list
+                          .map(
+                            (e) => TropoicalDiseaseWidget(
+                              image: "assets/images/Malaria.jpg",
+                              category: "Malaria",
+                              numOfMeds: 18,
+                              press: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DiseaseProductPage(),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
+                    );
+            }),
           ),
           const SizedBox(height: 20),
           Padding(
@@ -334,32 +367,54 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
             ),
           ),
           SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: otc_medicine_list
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: ProductCardWidget(
-                          onPress: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ProductDetailsScreen(),
-                                ));
-                          },
-                          addToFavorites: () {},
-                          isFavorite: true,
-                          updateCartCount: (int) {},
-                          title: "Panadol",
-                          dosage: "2x3",
-                          image: "assets/icons/female.png",
-                          price: "2000",
-                        ),
-                      ))
-                  .toList(),
-            ),
-          ),
+              scrollDirection: Axis.horizontal,
+              child: Consumer<DiseaseManagementProvider>(
+                  builder: (context, value, child) {
+                return value.getDiseaseList.isEmpty
+                    ? Row(
+                        children: [1, 2]
+                            .map(
+                              (e) => ProductCardWidget(
+                                onPress: () {},
+                                addToFavorites: () {},
+                                isFavorite: true,
+                                updateCartCount: (int) {},
+                                title: "product name",
+                                dosage: "dosage",
+                                image: "assets/icons/female.png",
+                                price: "---",
+                              ),
+                            )
+                            .toList(),
+                      )
+                    : Row(
+                        children: otc_medicine_list
+                            .map((e) => Padding(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: ProductCardWidget(
+                                    product: e,
+                                    onPress: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetailsScreen(
+                                              productData: e,
+                                            ),
+                                          ));
+                                    },
+                                    addToFavorites: () {},
+                                    isFavorite: true,
+                                    updateCartCount: (int) {},
+                                    title: "Panadol",
+                                    dosage: "2x3",
+                                    image: "assets/icons/female.png",
+                                    price: "2000",
+                                  ),
+                                ))
+                            .toList(),
+                      );
+              })),
           const SizedBox(
             height: 50,
           )

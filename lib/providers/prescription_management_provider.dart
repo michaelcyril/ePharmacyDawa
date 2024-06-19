@@ -56,7 +56,7 @@ class PrescriptionManagementProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>> addPrescription(ctx, data) async {
+  Future<Map<String, dynamic>> addPrescription(data) async {
     try {
       var res = await ApiClientDio().postRequest(
         AppConstants.addDiseaseUrl,

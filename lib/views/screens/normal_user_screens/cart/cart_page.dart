@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/cart/component/cart_product.dart';
+import 'package:provider/provider.dart';
 
 class CartPageScreen extends StatefulWidget {
   const CartPageScreen({super.key});
@@ -91,7 +93,29 @@ class _CartPageScreenState extends State<CartPageScreen> {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        var data = {
+                          "client": "ddddd",
+                          "prescription": "ddddd",
+                          "total_price": "ddddd",
+                          "medicines": [
+                            {"medicine": "uuid", "dosage": "2x3"},
+                            {"medicine": "uuid", "dosage": "2x3"},
+                          ],
+                        };
+                        Map<String, dynamic> res =
+                            await Provider.of<OrderManagementProvider>(context,
+                                    listen: false)
+                                .addOrder(data);
+                        if (res['save']) {
+                          Navigator.pop(context);
+                        } else {
+                          SnackBar(
+                            content: Text(res['message']),
+                            duration: const Duration(seconds: 3),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 3, 190, 150),
                         shape: RoundedRectangleBorder(

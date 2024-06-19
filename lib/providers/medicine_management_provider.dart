@@ -8,10 +8,12 @@ class MedicineManagementProvider with ChangeNotifier {
   List<Map<String, dynamic>> medicine_list = [];
   List<Map<String, dynamic>> otc_medicine_list = [];
   List<Map<String, dynamic>> all_prescription_medicine = [];
+  List<Map<String, dynamic>> disease_medicine = [];
 
   List<Map<String, dynamic>> get getMedicineList => medicine_list;
   List<Map<String, dynamic>> get getOtcMedicineList => otc_medicine_list;
   List<Map<String, dynamic>> get getAllPrescriptionMedicineList => all_prescription_medicine;
+  List<Map<String, dynamic>> get getDiseaseMedicineList => disease_medicine;
 
   Future<bool> getMedicines() async {
     try {
@@ -67,7 +69,7 @@ class MedicineManagementProvider with ChangeNotifier {
       } else {
         var body = res;
         if (body) {
-          medicine_list = body;
+          disease_medicine = body;
           notifyListeners();
           return true;
         }

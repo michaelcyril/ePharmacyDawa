@@ -13,8 +13,10 @@ class DiseaseProductCardWidget extends StatelessWidget {
       required this.title,
       required this.dosage,
       required this.price,
-      required this.isFavorite});
+      required this.isFavorite,
+      this.disease});
 
+  final disease;
   final double width, aspectRatio;
   final image;
   final title;

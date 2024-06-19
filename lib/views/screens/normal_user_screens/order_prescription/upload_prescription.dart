@@ -1,10 +1,14 @@
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: prefer_final_fields, use_build_context_synchronously
 
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/prescription_management_provider.dart';
+import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class UploadPrescriptionScreen extends StatefulWidget {
   const UploadPrescriptionScreen({super.key});
@@ -15,6 +19,14 @@ class UploadPrescriptionScreen extends StatefulWidget {
 }
 
 class _UploadPrescriptionScreenState extends State<UploadPrescriptionScreen> {
+  var userData;
+  setUserData() {
+    var data =
+        Provider.of<UserManagementProvider>(context, listen: false).getUserData;
+    setState(() {
+      userData = data;
+    });
+  }
   List<File> _prescriptions = [];
   List<bool> _selected = [];
   @override
@@ -145,7 +157,25 @@ class _UploadPrescriptionScreenState extends State<UploadPrescriptionScreen> {
           ),
           const Divider(),
           GestureDetector(
-            onTap: () {},
+            onTap: () async {
+              var data = {
+                "user": userData['id'],
+                "image": await MultipartFile.fromFile(_prescriptions[0].path,
+                    filename: XFile(_prescriptions[0].path).name),
+              };
+              Map<String, dynamic> res =
+                  await Provider.of<PrescriptionManagementProvider>(context,
+                          listen: false)
+                      .addPrescription(data);
+              if (res['save']) {
+                Navigator.pop(context);
+              } else {
+                SnackBar(
+                  content: Text(res['message']),
+                  duration: const Duration(seconds: 3),
+                );
+              }
+            },
             child: const Card(
               color: Color.fromARGB(255, 0, 136, 102),
               child: Padding(

@@ -1,17 +1,29 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/medicine_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/component/disease_product_widget.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/product_details.dart';
+import 'package:provider/provider.dart';
 
 class DiseaseProductPage extends StatefulWidget {
-  const DiseaseProductPage({super.key});
+  final diseaseId;
+  const DiseaseProductPage({super.key, this.diseaseId});
 
   @override
   State<DiseaseProductPage> createState() => _DiseaseProductPageState();
 }
 
 class _DiseaseProductPageState extends State<DiseaseProductPage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<MedicineManagementProvider>(
+      context,
+      listen: false,
+    ).getPrescriptionMedicines(widget.diseaseId);
+  }
+
   var dawa_list = [1, 2, 3, 4];
 
   @override
@@ -45,31 +57,42 @@ class _DiseaseProductPageState extends State<DiseaseProductPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: GridView.builder(
-            itemCount: dawa_list.length,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 0.7,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 16,
-            ),
-            itemBuilder: (context, index) => DiseaseProductCardWidget(
-              onPress: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProductDetailsScreen(),
-                    ));
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Consumer<MedicineManagementProvider>(
+              builder: (context, value, child) {
+                return value.getDiseaseMedicineList.isEmpty
+                    ? const Center(child: Text("No Otc Medicines"))
+                    : GridView.builder(
+                        itemCount: dawa_list.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 0.7,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 16,
+                        ),
+                        itemBuilder: (context, index) =>
+                            DiseaseProductCardWidget(
+                          disease: value.getDiseaseMedicineList[index],
+                          onPress: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetailsScreen(
+                                    productData:
+                                        value.getDiseaseMedicineList[index],
+                                  ),
+                                ));
+                          },
+                          image: "assets/images/dawa1.png",
+                          title: "Panadol",
+                          dosage: "400mg",
+                          price: "200",
+                          isFavorite: false,
+                        ),
+                      );
               },
-              image: "assets/images/dawa1.png",
-              title: "Panadol",
-              dosage: "400mg",
-              price: "200",
-              isFavorite: false,
-            ),
-          ),
-        ),
+            )),
       ),
     );
   }

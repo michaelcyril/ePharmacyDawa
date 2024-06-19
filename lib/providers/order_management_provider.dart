@@ -8,10 +8,19 @@ class OrderManagementProvider with ChangeNotifier {
   List<Map<String, dynamic>> order_list = [];
   List<Map<String, dynamic>> order_history_list = [];
   List<Map<String, dynamic>> all_orderpending_list = [];
+  List<Map<String, dynamic>> cart_list = [];
 
   List<Map<String, dynamic>> get getOrderList => order_list;
   List<Map<String, dynamic>> get getOrderHistoryList => order_history_list;
-  List<Map<String, dynamic>> get getAllOrderPendingList => all_orderpending_list;
+  List<Map<String, dynamic>> get getAllOrderPendingList =>
+      all_orderpending_list;
+  List<Map<String, dynamic>> get getCartList => all_orderpending_list;
+
+  bool setCartData(data) {
+    cart_list.add(data);
+    notifyListeners();
+    return true;
+  }
 
   Future<bool> getOrders() async {
     try {
@@ -79,7 +88,7 @@ class OrderManagementProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>> addOrder(ctx, data) async {
+  Future<Map<String, dynamic>> addOrder(data) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',

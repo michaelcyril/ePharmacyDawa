@@ -7,5 +7,6 @@ class Images {
   static const String onboard_1 = 'assets/images/onb1.jpg';
   static const String onboard_2 = 'assets/images/onb1.jpg';
   static const String onboard_3 = 'assets/images/onb1.jpg';
+  static const String noImageProfile = 'assets/images/no_image_profile.jpeg';
 
 }

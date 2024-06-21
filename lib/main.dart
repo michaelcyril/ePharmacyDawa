@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/chat_management_provider.dart';
 import 'package:flutter_project_template/providers/default_provider.dart';
 import 'package:flutter_project_template/providers/disease_management_provider.dart';
 import 'package:flutter_project_template/providers/medicine_management_provider.dart';
@@ -16,6 +17,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => PrescriptionManagementProvider()),
         ChangeNotifierProvider(create: (context) => OrderManagementProvider()),
         ChangeNotifierProvider(create: (context) => MedicineManagementProvider()),
+        ChangeNotifierProvider(create: (context) => ChatManagementProvider()),
       ],
       child: const MyApp(),
     ),

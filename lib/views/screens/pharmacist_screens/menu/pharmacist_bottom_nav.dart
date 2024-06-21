@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/views/screens/chat/chat_list.dart';
 import 'package:flutter_project_template/views/screens/profile/profile_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/home/home_page.dart';
 
@@ -7,14 +8,15 @@ class PharmacistBottomNav extends StatefulWidget {
   const PharmacistBottomNav({super.key});
 
   @override
-  State<PharmacistBottomNav> createState() => _PharmacistBottomNavBottomNavState();
+  State<PharmacistBottomNav> createState() =>
+      _PharmacistBottomNavBottomNavState();
 }
 
 class _PharmacistBottomNavBottomNavState extends State<PharmacistBottomNav> {
   int index = 0;
   final screens = [
     const PharmacistHomePageScreen(),
-    const Text(""),
+    const RecentChats(),
     const ProfilePageScreen(),
   ];
 

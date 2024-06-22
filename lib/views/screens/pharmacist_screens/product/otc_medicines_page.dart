@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/cart_management_provider.dart';
 import 'package:flutter_project_template/providers/medicine_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/product_card_widget.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/product_details.dart';
@@ -78,8 +79,10 @@ class _PharmacistOtcMedicinesScreenScreenState
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProductDetailsScreen(productData: value.getOtcMedicineList[index],),
+                                  builder: (context) => ProductDetailsScreen(
+                                    productData:
+                                        value.getOtcMedicineList[index],
+                                  ),
                                 ));
                           },
                           image: "assets/images/dawa1.png",
@@ -87,7 +90,12 @@ class _PharmacistOtcMedicinesScreenScreenState
                           dosage: value.getOtcMedicineList[index]['dosage'],
                           price: value.getOtcMedicineList[index]['price'],
                           isFavorite: false,
-                          updateCartCount: (int) {},
+                          updateCartCount: (int) {
+                            Provider.of<CartManagementProvider>(
+                              context,
+                              listen: false,
+                            ).addItem(value.getOtcMedicineList[index]);
+                          },
                           addToFavorites: () {},
                         ),
                       );

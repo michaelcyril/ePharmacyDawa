@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/cart_management_provider.dart';
 import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/cart/component/cart_product.dart';
 import 'package:provider/provider.dart';
@@ -44,12 +45,21 @@ class _CartPageScreenState extends State<CartPageScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: CartProductWidget(),
-          ),
+        child: Consumer<CartManagementProvider>(
+          builder: (context, value, child) {
+            return value.items.isEmpty
+                ? const Center(child: Text("Empty Cart"))
+                : ListView.builder(
+                    itemCount: 2,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: CartProductWidget(
+                        cartValue: value.items.values.toList()[index],
+                        cartKey: value.items.keys.toList()[index],
+                      ),
+                    ),
+                  );
+          },
         ),
       ),
       bottomNavigationBar: Container(
@@ -82,9 +92,10 @@ class _CartPageScreenState extends State<CartPageScreen> {
                     child: Text.rich(
                       TextSpan(
                         text: "Total:\n",
-                        children: const [
+                        children: [
                           TextSpan(
-                            text: "\Tsh 200",
+                            text:
+                                "Tsh ${Provider.of<CartManagementProvider>(context).totalAmount.toString()}",
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ],
@@ -108,6 +119,9 @@ class _CartPageScreenState extends State<CartPageScreen> {
                                     listen: false)
                                 .addOrder(data);
                         if (res['save']) {
+                          Provider.of<CartManagementProvider>(context,
+                                  listen: false)
+                              .clear();
                           Navigator.pop(context);
                         } else {
                           SnackBar(

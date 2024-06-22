@@ -1,7 +1,26 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables
 
-class CartProductWidget extends StatelessWidget {
-  const CartProductWidget({super.key});
+import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/cart_management_provider.dart';
+import 'package:provider/provider.dart';
+
+class CartProductWidget extends StatefulWidget {
+  final cartKey;
+  final cartValue;
+  const CartProductWidget({super.key, this.cartValue, this.cartKey});
+
+  @override
+  State<CartProductWidget> createState() => _CartProductWidgetState();
+}
+
+class _CartProductWidgetState extends State<CartProductWidget> {
+  removeFromCart(productId){
+    Provider.of<CartManagementProvider>(context, listen: false).removeItem(productId);
+  }
+
+  decrementProduct(productId){
+    Provider.of<CartManagementProvider>(context, listen: false).removeSingleItem(productId);
+  }
 
   @override
   Widget build(BuildContext context) {

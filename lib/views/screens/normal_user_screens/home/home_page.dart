@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/cart_management_provider.dart';
 import 'package:flutter_project_template/providers/disease_management_provider.dart';
 import 'package:flutter_project_template/providers/medicine_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/cart/cart_page.dart';
@@ -24,6 +25,7 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
   @override
   void initState() {
     super.initState();
+    getItemCounts();
     Provider.of<DiseaseManagementProvider>(
       context,
       listen: false,
@@ -32,6 +34,15 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
       context,
       listen: false,
     ).getOtcMedicines();
+  }
+
+  var itemCount = 0;
+  getItemCounts() {
+    var itemC =
+        Provider.of<CartManagementProvider>(context, listen: false).itemCount;
+    setState(() {
+      itemCount = itemC;
+    });
   }
 
   var desease_list = [1, 2, 3, 4];
@@ -87,7 +98,7 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                       // const SizedBox(width: 8),
                       IconButtonWIthCounter(
                         image: "assets/images/cart.png",
-                        numOfitem: 2,
+                        numOfitem: itemCount,
                         press: () {
                           Navigator.push(
                               context,

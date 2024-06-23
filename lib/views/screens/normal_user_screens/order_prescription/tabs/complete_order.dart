@@ -4,14 +4,14 @@ import 'package:flutter_project_template/providers/user_management_provider.dart
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/component/order_card.dart';
 import 'package:provider/provider.dart';
 
-class PendingOrderTab extends StatefulWidget {
-  const PendingOrderTab({super.key});
+class CompleteOrderTab extends StatefulWidget {
+  const CompleteOrderTab({super.key});
 
   @override
-  State<PendingOrderTab> createState() => _PendingOrderTabState();
+  State<CompleteOrderTab> createState() => _PendingOrderTabState();
 }
 
-class _PendingOrderTabState extends State<PendingOrderTab> {
+class _PendingOrderTabState extends State<CompleteOrderTab> {
   @override
   void initState() {
     super.initState();
@@ -24,16 +24,16 @@ class _PendingOrderTabState extends State<PendingOrderTab> {
     Provider.of<OrderManagementProvider>(
       context,
       listen: false,
-    ).clientPendingOrders(data['id']);
+    ).clientOrdersHistory(data['id']);
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<OrderManagementProvider>(builder: (context, value, child) {
-      return value.getClientPendiOrderList.isEmpty
-          ? const Center(child: Text("No Pending Order"))
+      return value.getClientOrderHistoryList.isEmpty
+          ? const Center(child: Text("No Order History"))
           : Column(
-              children: value.getClientPendiOrderList
+              children: value.getClientOrderHistoryList
                   .map<Widget>(
                     (e) => const OrderCardWidget(
                       confirmation: "Pending",

@@ -1,20 +1,20 @@
 // ignore_for_file: sized_box_for_whitespace, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template/providers/order_management_provider.dart';
+import 'package:flutter_project_template/providers/prescription_management_provider.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/tabs/complete_order.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/tabs/pending_order.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/tabs/complete_prescription.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/tabs/pending_prescription.dart';
 import 'package:provider/provider.dart';
 
-class OrderPageScreen extends StatefulWidget {
-  const OrderPageScreen({super.key});
+class PrescriptionPageScreen extends StatefulWidget {
+  const PrescriptionPageScreen({super.key});
 
   @override
-  State<OrderPageScreen> createState() => _OrderPageScreenState();
+  State<PrescriptionPageScreen> createState() => _OrderPageScreenState();
 }
 
-class _OrderPageScreenState extends State<OrderPageScreen>
+class _OrderPageScreenState extends State<PrescriptionPageScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -28,14 +28,14 @@ class _OrderPageScreenState extends State<OrderPageScreen>
   getOrders() {
     var data =
         Provider.of<UserManagementProvider>(context, listen: false).getUserData;
-    Provider.of<OrderManagementProvider>(
+    Provider.of<PrescriptionManagementProvider>(
       context,
       listen: false,
-    ).clientPendingOrders(data['id']);
-    Provider.of<OrderManagementProvider>(
+    ).clientPendingPrescriptions(data['id']);
+    Provider.of<PrescriptionManagementProvider>(
       context,
       listen: false,
-    ).clientOrdersHistory(data['id']);
+    ).clientPrescriptionsHistory(data['id']);
   }
 
   @override
@@ -53,7 +53,7 @@ class _OrderPageScreenState extends State<OrderPageScreen>
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
-          "My Orders",
+          "My Prescription",
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -115,8 +115,8 @@ class _OrderPageScreenState extends State<OrderPageScreen>
                                     const Color.fromARGB(255, 255, 255, 255),
                                 controller: _tabController,
                                 tabs: const [
-                                  Tab(text: "  Pending Order  "),
-                                  Tab(text: "  Complete Order  "),
+                                  Tab(text: "  Pending Prescription  "),
+                                  Tab(text: "  Complete Prescription  "),
                                 ],
                               ),
                             ),
@@ -128,8 +128,8 @@ class _OrderPageScreenState extends State<OrderPageScreen>
                       child: TabBarView(
                         controller: _tabController,
                         children: const [
-                          PendingOrderTab(),
-                          CompleteOrderTab(),
+                          PendingPrescriptionTab(),
+                          CompletePrescriptionTab(),
                         ],
                       ),
                     ),

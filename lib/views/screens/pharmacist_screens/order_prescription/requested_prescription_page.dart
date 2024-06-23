@@ -4,16 +4,16 @@ import 'package:provider/provider.dart';
 
 import 'component/order_card.dart';
 
-class PrescriptionPagePharmacistScreen extends StatefulWidget {
-  const PrescriptionPagePharmacistScreen({super.key});
+class RequestedPrescriptionPagePharmacistScreen extends StatefulWidget {
+  const RequestedPrescriptionPagePharmacistScreen({super.key});
 
   @override
-  State<PrescriptionPagePharmacistScreen> createState() =>
-      _PrescriptionPageScreenState();
+  State<RequestedPrescriptionPagePharmacistScreen> createState() =>
+      _RequestedPrescriptionPageScreenState();
 }
 
-class _PrescriptionPageScreenState
-    extends State<PrescriptionPagePharmacistScreen> {
+class _RequestedPrescriptionPageScreenState
+    extends State<RequestedPrescriptionPagePharmacistScreen> {
   @override
   void initState() {
     super.initState();
@@ -21,7 +21,7 @@ class _PrescriptionPageScreenState
     Provider.of<PrescriptionManagementProvider>(
       context,
       listen: false,
-    ).pharmacistPrescriptionsHistory();
+    ).pharmacistPendingPrescriptions();
   }
 
   @override

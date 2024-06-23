@@ -18,7 +18,7 @@ class _OrderRequestPageState extends State<OrderRequestPage> {
     Provider.of<OrderManagementProvider>(
       context,
       listen: false,
-    ).getALlOrderPending();
+    ).pharmacistPendingOrders();
   }
 
   @override
@@ -53,10 +53,10 @@ class _OrderRequestPageState extends State<OrderRequestPage> {
       ),
       body: Consumer<OrderManagementProvider>(
         builder: (context, value, child) {
-          return value.getAllOrderPendingList.isEmpty
+          return value.getPharmacistPendiOrderList.isEmpty
               ? const Center(child: Text("No Order Requests"))
               : ListView(
-                  children: value.getAllOrderPendingList
+                  children: value.getPharmacistPendiOrderList
                       .map<Widget>((e) => const OrderCardPharmacistWidget(
                             confirmation: "Pending",
                             mainText: "Prescription 1",

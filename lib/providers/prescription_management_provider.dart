@@ -6,23 +6,37 @@ import 'package:flutter_project_template/helpers/api/api_client_dio.dart';
 import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class PrescriptionManagementProvider with ChangeNotifier {
-  List<Map<String, dynamic>> prescription_list = [];
-  List<Map<String, dynamic>> individual_prescription_list = [];
+  // Client Prescription Management
+  List<Map<String, dynamic>> client_pending_prescription = [];
+  List<Map<String, dynamic>> clint_prescription_history = [];
+  List<Map<String, dynamic>> client_canceled_prescription = [];
 
-  get getPrescriptionList => prescription_list;
-  get getIndividualPrescriptionList => individual_prescription_list;
+  List<Map<String, dynamic>> get getClientPendiPrescriptionList => client_pending_prescription;
+  List<Map<String, dynamic>> get getClientPrescriptionHistoryList => clint_prescription_history;
+  List<Map<String, dynamic>> get getClientCanceledPrescriptionList => client_canceled_prescription;
 
-  Future<bool> getPrescription() async {
+  // Pharmacy Prescription Management
+  List<Map<String, dynamic>> pharmacist_pending_prescription = [];
+  List<Map<String, dynamic>> pharmacist_prescription_history = [];
+  List<Map<String, dynamic>> pharmacist_canceled_prescription = [];
+
+  List<Map<String, dynamic>> get getPharmacistPendiPrescriptionList => pharmacist_pending_prescription;
+  List<Map<String, dynamic>> get getPharmacistPrescriptionHistoryList => pharmacist_prescription_history;
+  List<Map<String, dynamic>> get getPharmacistCanceledPrescriptionList => pharmacist_canceled_prescription;
+
+
+
+  Future<bool> clientPendingPrescriptions(clientId) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetPrescriptionUrl}?query_type=pharmacist_prescription&client_id=$clientId&prescription_status=PENDING');
       if (res == null) {
         return false;
       } else {
         var body = res;
         if (body) {
-          prescription_list = body;
+          client_pending_prescription = body;
           notifyListeners();
           return true;
         }
@@ -34,17 +48,105 @@ class PrescriptionManagementProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getIndividualPrescription() async {
+  Future<bool> clientPrescriptionsHistory(clientId) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetPrescriptionUrl}?query_type=pharmacist_prescription&client_id=$clientId&prescription_status=COMPLETE');
       if (res == null) {
         return false;
       } else {
         var body = res;
         if (body) {
-          individual_prescription_list = body;
+          clint_prescription_history = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> clientCanceledPrescriptions(clientId) async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.insertGetPrescriptionUrl}?query_type=pharmacist_prescription&client_id=$clientId&prescription_status=CANCELED');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          client_canceled_prescription = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> pharmacistPendingPrescriptions() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.insertGetPrescriptionUrl}?query_type=pharmacist_prescription&prescription_status=PENDING');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          pharmacist_pending_prescription = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> pharmacistPrescriptionsHistory() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.insertGetPrescriptionUrl}?query_type=pharmacist_prescription&prescription_status=COMPLETE');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          pharmacist_prescription_history = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> pharmacistCanceledPrescriptions() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.insertGetPrescriptionUrl}?query_type=pharmacist_prescription&prescription_status=CANCELED');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          pharmacist_canceled_prescription = body;
           notifyListeners();
           return true;
         }
@@ -59,7 +161,7 @@ class PrescriptionManagementProvider with ChangeNotifier {
   Future<Map<String, dynamic>> addPrescription(data) async {
     try {
       var res = await ApiClientDio().postRequest(
-        AppConstants.addDiseaseUrl,
+        AppConstants.insertGetPrescriptionUrl,
         data,
       );
       if (res == null) {
@@ -83,7 +185,7 @@ class PrescriptionManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(
               headers: <String, String>{'Content-type': 'application/json'})
-          .getRequest("${AppConstants.addDiseaseUrl}?id=$id");
+          .getRequest("${AppConstants.deleteUpdatePrescriptionUrl}?id=$id");
 
       if (res == null) {
         return {'delete': false, 'message': 'Something went wrong'};
@@ -104,7 +206,7 @@ class PrescriptionManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.cmpleteProfileUrl, data);
+      }).postRequest(AppConstants.deleteUpdatePrescriptionUrl, data);
       if (res == null) {
         return {'update': false, 'message': 'Something went wrong'};
       } else {
@@ -124,7 +226,7 @@ class PrescriptionManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.cmpleteProfileUrl, data);
+      }).postRequest(AppConstants.changePrescriptionStatusUrl, data);
       if (res == null) {
         return {'chenge': false, 'message': 'Something went wrong'};
       } else {

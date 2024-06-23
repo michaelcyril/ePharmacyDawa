@@ -18,7 +18,7 @@ class _OrdersPageScreenState extends State<OrdersPagePharmacistScreen> {
     Provider.of<OrderManagementProvider>(
       context,
       listen: false,
-    ).getOrderHistory();
+    ).pharmacistOrdersHistory();
   }
 
   @override
@@ -53,7 +53,7 @@ class _OrdersPageScreenState extends State<OrdersPagePharmacistScreen> {
       ),
       body: Consumer<OrderManagementProvider>(
         builder: (context, value, child) {
-          return value.getOrderHistoryList.isEmpty
+          return value.getPharmacistOrderHistoryList.isEmpty
               ? const Center(child: Text("No Order History"))
               : ListView(
                   children: [1, 2, 3, 4]

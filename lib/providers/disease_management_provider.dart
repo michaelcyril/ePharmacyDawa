@@ -13,7 +13,7 @@ class DiseaseManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest(AppConstants.insertGetDiseaseUrl);
       if (res == null) {
         return false;
       } else {
@@ -35,7 +35,7 @@ class DiseaseManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.addDiseaseUrl, data);
+      }).postRequest(AppConstants.insertGetDiseaseUrl, data);
       if (res == null) {
         return {"save": false, "message": "Something went wrong"};
       } else {
@@ -55,7 +55,7 @@ class DiseaseManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.addDiseaseUrl, data);
+      }).postRequest(AppConstants.deleteUpdateDiseaseUrl, data);
       if (res == null) {
         return {"update": false, "message": "Something went wrong"};
       } else {
@@ -75,7 +75,7 @@ class DiseaseManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest(AppConstants.deleteUpdateDiseaseUrl);
       if (res == null) {
         return false;
       } else {

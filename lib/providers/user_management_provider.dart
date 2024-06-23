@@ -96,7 +96,7 @@ class UserManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.cmpleteProfileUrl, data);
+      }).postRequest(AppConstants.registerUserUrl, data);
       if (res == null) {
         return {'save': false, 'message': 'Something went wrong'};
       } else {

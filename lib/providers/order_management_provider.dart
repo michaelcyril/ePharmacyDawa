@@ -5,34 +5,37 @@ import 'package:flutter_project_template/constants/app_constants.dart';
 import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class OrderManagementProvider with ChangeNotifier {
-  List<Map<String, dynamic>> order_list = [];
-  List<Map<String, dynamic>> order_history_list = [];
-  List<Map<String, dynamic>> all_orderpending_list = [];
-  List<Map<String, dynamic>> cart_list = [];
+  // Client Order Management
+  List<Map<String, dynamic>> client_pending_order = [];
+  List<Map<String, dynamic>> clint_order_history = [];
+  List<Map<String, dynamic>> client_canceled_order = [];
 
-  List<Map<String, dynamic>> get getOrderList => order_list;
-  List<Map<String, dynamic>> get getOrderHistoryList => order_history_list;
-  List<Map<String, dynamic>> get getAllOrderPendingList =>
-      all_orderpending_list;
-  List<Map<String, dynamic>> get getCartList => all_orderpending_list;
+  List<Map<String, dynamic>> get getClientPendiOrderList => client_pending_order;
+  List<Map<String, dynamic>> get getClientOrderHistoryList => clint_order_history;
+  List<Map<String, dynamic>> get getClientCanceledOrderList => client_canceled_order;
 
-  bool setCartData(data) {
-    cart_list.add(data);
-    notifyListeners();
-    return true;
-  }
+  // Pharmacy Order Management
+  List<Map<String, dynamic>> pharmacist_pending_order = [];
+  List<Map<String, dynamic>> pharmacist_order_history = [];
+  List<Map<String, dynamic>> pharmacist_canceled_order = [];
 
-  Future<bool> getOrders() async {
+  List<Map<String, dynamic>> get getPharmacistPendiOrderList => pharmacist_pending_order;
+  List<Map<String, dynamic>> get getPharmacistOrderHistoryList => pharmacist_order_history;
+  List<Map<String, dynamic>> get getPharmacistCanceledOrderList => pharmacist_canceled_order;
+
+
+
+  Future<bool> clientPendingOrders(clientId) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=PENDING');
       if (res == null) {
         return false;
       } else {
         var body = res;
         if (body) {
-          order_list = body;
+          client_pending_order = body;
           notifyListeners();
           return true;
         }
@@ -44,17 +47,17 @@ class OrderManagementProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getOrderHistory() async {
+  Future<bool> clientOrdersHistory(clientId) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=COMPLETE');
       if (res == null) {
         return false;
       } else {
         var body = res;
         if (body) {
-          order_history_list = body;
+          clint_order_history = body;
           notifyListeners();
           return true;
         }
@@ -66,17 +69,83 @@ class OrderManagementProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getALlOrderPending() async {
+  Future<bool> clientCanceledOrders(clientId) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=CANCELED');
       if (res == null) {
         return false;
       } else {
         var body = res;
         if (body) {
-          all_orderpending_list = body;
+          client_canceled_order = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> pharmacistPendingOrders() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=PENDING');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          pharmacist_pending_order = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> pharmacistOrdersHistory() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=COMPLETE');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          pharmacist_order_history = body;
+          notifyListeners();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> pharmacistCanceledOrders() async {
+    try {
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=CANCELED');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body) {
+          pharmacist_canceled_order = body;
           notifyListeners();
           return true;
         }
@@ -92,7 +161,7 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.addDiseaseUrl, data);
+      }).postRequest(AppConstants.insertGetOrderUrl, data);
       if (res == null) {
         return {"save": false, "message": "Something went wrong"};
       } else {
@@ -112,7 +181,7 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.addDiseaseUrl, data);
+      }).postRequest(AppConstants.deleteUpdateOrderUrl, data);
       if (res == null) {
         return {"update": false, "message": "Something went wrong"};
       } else {
@@ -132,7 +201,7 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest(AppConstants.deleteUpdateOrderUrl);
       if (res == null) {
         return false;
       } else {

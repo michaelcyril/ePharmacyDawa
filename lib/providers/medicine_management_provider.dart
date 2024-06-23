@@ -19,7 +19,7 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetMedicineUrl}?query_type=all');
       if (res == null) {
         return false;
       } else {
@@ -41,7 +41,7 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetMedicineUrl}?query_type=otc');
       if (res == null) {
         return false;
       } else {
@@ -63,7 +63,7 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest("${AppConstants.addDiseaseUrl}?id=$deseaseId");
+      }).getRequest("${AppConstants.insertGetMedicineUrl}?query_type=disease&disease_id=$deseaseId");
       if (res == null) {
         return false;
       } else {
@@ -85,7 +85,7 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest('${AppConstants.insertGetMedicineUrl}?query_type=all_disease');
       if (res == null) {
         return false;
       } else {
@@ -107,7 +107,7 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.addDiseaseUrl, data);
+      }).postRequest(AppConstants.insertGetMedicineUrl, data);
       if (res == null) {
         return {"save": false, "message": "Something went wrong"};
       } else {
@@ -127,7 +127,7 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).postRequest(AppConstants.addDiseaseUrl, data);
+      }).postRequest(AppConstants.deleteUpdateMedicineUrl, data);
       if (res == null) {
         return {"update": false, "message": "Something went wrong"};
       } else {
@@ -147,7 +147,7 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest(AppConstants.addDiseaseUrl);
+      }).getRequest(AppConstants.deleteUpdateMedicineUrl);
       if (res == null) {
         return false;
       } else {

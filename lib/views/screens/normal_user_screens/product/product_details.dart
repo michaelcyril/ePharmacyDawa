@@ -46,7 +46,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             width: 238,
             child: AspectRatio(
               aspectRatio: 1,
-              child: Image.asset("assets/images/panadol1.png"),
+              child: Image.asset("assets/images/dawa1.png"),
             ),
           ),
           const SizedBox(height: 20,),

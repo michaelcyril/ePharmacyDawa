@@ -106,6 +106,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       // String pharmacistNumber = "769190100";
                       var data = {
                         "phone": inputNumber,
+                        "role": "NORMAL"
                       };
                       bool result = await Provider.of<UserManagementProvider>(
                               context,

@@ -238,12 +238,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
                     onPressed: () async {
+                      print("============");
                       var sharedPref = SharedPreferencesManager();
                       var userId = json.decode(
-                              sharedPref.getString(AppConstants.user))['user']
-                          ['id'];
+                          await sharedPref.getString(AppConstants.user));
                       var data = {
-                        "id": userId,
+                        "id": userId['id'],
                         "name": nameController.text,
                         "age": ageController.text,
                         "address": addressController.text,

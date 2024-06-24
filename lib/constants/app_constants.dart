@@ -6,9 +6,9 @@ class AppConstants {
   static const String token = 'token';
   static const String user = 'user';
 
-  static const String apiBaseUrl = 'http://192.168.1.120:8000/';
-  static const String mediaBaseUrl = 'http://192.168.1.120:8000';
-  static const String webSocketUrl = 'ws://192.168.1.120:8000/chat-room-conversation/';
+  static const String apiBaseUrl = 'http://127.0.0.1:8000/';
+  static const String mediaBaseUrl = 'http://127.0.0.1:8000';
+  static const String webSocketUrl = 'ws://127.0.0.1:8000/chat-room-conversation/';
   static const String verifyPhoneUrl = 'user-management/verify-phone';
   static const String verifyOtpUrl = 'user-management/verify-otp';
   static const String cmpleteProfileUrl = 'user-management/complete-profile';

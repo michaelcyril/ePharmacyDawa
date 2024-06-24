@@ -62,9 +62,9 @@ class _PharmacistPrescriptionMedicinesPageState
             child: Consumer<MedicineManagementProvider>(
               builder: (context, value, child) {
                 return value.getAllPrescriptionMedicineList.isEmpty
-                    ? const Center(child: Text("No Otc Medicines"))
+                    ? const Center(child: Text("No Prescription Medicines"))
                     : GridView.builder(
-                        itemCount: value.getOtcMedicineList.length,
+                        itemCount: value.getAllPrescriptionMedicineList.length,
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 200,

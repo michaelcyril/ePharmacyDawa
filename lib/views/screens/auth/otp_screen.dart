@@ -136,15 +136,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       listen: false,
                     ).verifyOtp(context, data);
                     if (res['success']) {
-                      if (res['gender'] == null) {
-                        Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const CompleteProfileScreen(),
-                          ),
-                        );
-                      } else if (res['role'] == 'ADMIN') {
+                      if (res['user']['role'] == 'ADMIN') {
                         Navigator.pushReplacement(
                           context,
                           PageTransition(
@@ -152,14 +144,24 @@ class _OtpScreenState extends State<OtpScreen> {
                             child: const PharmacistBottomNav(),
                           ),
                         );
-                      } else if (res['role'] == 'NORMAL') {
-                        Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const NormalUserBottomNav(),
-                          ),
-                        );
+                      } else if (res['user']['role'] == 'NORMAL') {
+                        if (res['user']['gender'] == null) {
+                          Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const CompleteProfileScreen(),
+                            ),
+                          );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const NormalUserBottomNav(),
+                            ),
+                          );
+                        }
                       }
                     } else {
                       SnackBar(

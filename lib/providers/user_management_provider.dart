@@ -33,7 +33,7 @@ class UserManagementProvider with ChangeNotifier {
       } else {
         var body = res;
         print(body);
-        if (body('request')) {
+        if (body['request']) {
           return true;
         }
         return false;
@@ -53,6 +53,8 @@ class UserManagementProvider with ChangeNotifier {
         return {'success': false, 'message': 'Something went wrong'};
       } else {
         var body = res;
+        print("---------------");
+        print(body);
         if (body['success']) {
           var sharedPref = SharedPreferencesManager();
           sharedPref.saveString(AppConstants.user, json.encode(body['user']));
@@ -77,6 +79,8 @@ class UserManagementProvider with ChangeNotifier {
         return {'update': false, 'message': 'Something went wrong'};
       } else {
         var body = res;
+        print("-------------");
+        print(body);
         if (body['update']) {
           var sharedPref = SharedPreferencesManager();
           sharedPref.saveString(AppConstants.user, json.encode(body['user']));

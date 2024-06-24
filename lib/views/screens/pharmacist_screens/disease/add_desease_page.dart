@@ -50,6 +50,7 @@ class _AddDiseasePageState extends State<AddDiseasePage> {
                     height: MediaQuery.of(context).size.height * 0.08,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextField(
+                      controller: nameController,
                       decoration: InputDecoration(
                         fillColor: Colors.white70,
                         filled: true,
@@ -74,6 +75,7 @@ class _AddDiseasePageState extends State<AddDiseasePage> {
                       var data = {
                         "name": nameController.text,
                       };
+                      print(data);
                       Map<String, dynamic> res =
                           await Provider.of<DiseaseManagementProvider>(context,
                                   listen: false)

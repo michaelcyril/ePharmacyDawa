@@ -55,7 +55,7 @@ class _DiseasePageScreenState extends State<DiseasePageScreen> {
       body: Consumer<DiseaseManagementProvider>(
         builder: (context, value, child) {
           return value.getDiseaseList.isEmpty
-              ? const Center(child: Text("No Order History"))
+              ? const Center(child: Text("No Disease"))
               : ListView(
                   children: value.getDiseaseList
                       .map<Widget>(

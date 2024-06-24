@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 
 class DiseaseProductPage extends StatefulWidget {
   final diseaseId;
-  const DiseaseProductPage({super.key, this.diseaseId});
+  final diseaseName;
+
+  const DiseaseProductPage({super.key, this.diseaseId, this.diseaseName});
 
   @override
   State<DiseaseProductPage> createState() => _DiseaseProductPageState();
@@ -30,9 +32,9 @@ class _DiseaseProductPageState extends State<DiseaseProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Disease Medicines",
-          style: TextStyle(
+        title: Text(
+          "${widget.diseaseName} Medicines",
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 20,
           ),
@@ -61,9 +63,9 @@ class _DiseaseProductPageState extends State<DiseaseProductPage> {
             child: Consumer<MedicineManagementProvider>(
               builder: (context, value, child) {
                 return value.getDiseaseMedicineList.isEmpty
-                    ? const Center(child: Text("No Otc Medicines"))
+                    ? const Center(child: Text("No Disease Medicines"))
                     : GridView.builder(
-                        itemCount: dawa_list.length,
+                        itemCount: value.getDiseaseMedicineList.length,
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 200,
@@ -85,9 +87,9 @@ class _DiseaseProductPageState extends State<DiseaseProductPage> {
                                 ));
                           },
                           image: "assets/images/dawa1.png",
-                          title: "Panadol",
-                          dosage: "400mg",
-                          price: "200",
+                          title: value.getDiseaseMedicineList[index]['name'],
+                          dosage: value.getDiseaseMedicineList[index]['dosage'],
+                          price: value.getDiseaseMedicineList[index]['price'],
                           isFavorite: false,
                         ),
                       );

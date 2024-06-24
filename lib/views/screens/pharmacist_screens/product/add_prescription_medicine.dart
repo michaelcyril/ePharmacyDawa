@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_typing_uninitialized_variables, empty_catches, use_build_context_synchronously, unused_local_variable
+// ignore_for_file: sized_box_for_whitespace, prefer_typing_uninitialized_variables, empty_catches, use_build_context_synchronously, unused_local_variable, unused_import
 
 import 'dart:io';
 
@@ -14,7 +14,8 @@ class AddPrescriptionMedicinePage extends StatefulWidget {
   const AddPrescriptionMedicinePage({super.key});
 
   @override
-  State<AddPrescriptionMedicinePage> createState() => _AddOTCMedicinePageState();
+  State<AddPrescriptionMedicinePage> createState() =>
+      _AddOTCMedicinePageState();
 }
 
 class _AddOTCMedicinePageState extends State<AddPrescriptionMedicinePage> {
@@ -42,6 +43,7 @@ class _AddOTCMedicinePageState extends State<AddPrescriptionMedicinePage> {
   @override
   void initState() {
     super.initState();
+    getDesease();
   }
 
   getDesease() {
@@ -125,6 +127,74 @@ class _AddOTCMedicinePageState extends State<AddPrescriptionMedicinePage> {
                       ),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .start, // Aligns children to the start (left) of the row
+                    children: [
+                      Text(
+                        "DISEASE",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Container(
+                  padding: const EdgeInsets.only(
+                      left: 10.0, right: 10.0, top: 0, bottom: 0),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: deseaseList == null
+                      ? DropdownButton<String>(
+                          value: choosenDisease,
+                          hint: const Text('Select Disease'),
+                          dropdownColor: Colors.white,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 36,
+                          isExpanded: true,
+                          underline: const SizedBox(),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 15),
+                          items: const [],
+                          onChanged: (String? value) {
+                            setState(() {
+                              choosenDisease = value;
+                            });
+                          },
+                        )
+                      : DropdownButton<String>(
+                          value: choosenDisease,
+                          hint: const Text('Select Desease'),
+                          dropdownColor: Colors.white,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 36,
+                          isExpanded: true,
+                          underline: const SizedBox(),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 15),
+                          items: deseaseList
+                              .map<DropdownMenuItem<String>>((var value) {
+                            return DropdownMenuItem<String>(
+                              value: value['id'],
+                              child: Text(value['name']),
+                            );
+                          }).toList(),
+                          onChanged: (String? value) {
+                            setState(() {
+                              choosenDisease = value;
+                            });
+                          },
+                        ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -287,10 +357,11 @@ class _AddOTCMedicinePageState extends State<AddPrescriptionMedicinePage> {
                         "name": nameController.text,
                         "description": descriptionController.text,
                         "dosage": dosageController.text,
-                        "type": "OTP",
+                        "desease": choosenDisease,
+                        "type": "DESEASE",
                         "price": priceController.text,
-                        "image": await MultipartFile.fromFile(imagefile!.path,
-                            filename: imagefile!.name),
+                        // "image": await MultipartFile.fromFile(imagefile!.path,
+                        //     filename: imagefile!.name),
                       };
                       Map<String, dynamic> res =
                           await Provider.of<MedicineManagementProvider>(context,

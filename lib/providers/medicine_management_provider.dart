@@ -5,15 +5,15 @@ import 'package:flutter_project_template/constants/app_constants.dart';
 import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class MedicineManagementProvider with ChangeNotifier {
-  List<Map<String, dynamic>> medicine_list = [];
-  List<Map<String, dynamic>> otc_medicine_list = [];
-  List<Map<String, dynamic>> all_prescription_medicine = [];
-  List<Map<String, dynamic>> disease_medicine = [];
+  var medicine_list = [];
+  var otc_medicine_list = [];
+  var all_prescription_medicine = [];
+  var disease_medicine = [];
 
-  List<Map<String, dynamic>> get getMedicineList => medicine_list;
-  List<Map<String, dynamic>> get getOtcMedicineList => otc_medicine_list;
-  List<Map<String, dynamic>> get getAllPrescriptionMedicineList => all_prescription_medicine;
-  List<Map<String, dynamic>> get getDiseaseMedicineList => disease_medicine;
+  get getMedicineList => medicine_list;
+  get getOtcMedicineList => otc_medicine_list;
+  get getAllPrescriptionMedicineList => all_prescription_medicine;
+  get getDiseaseMedicineList => disease_medicine;
 
   Future<bool> getMedicines() async {
     try {
@@ -24,13 +24,10 @@ class MedicineManagementProvider with ChangeNotifier {
         return false;
       } else {
         var body = res;
-        if (body) {
-          medicine_list = body;
-          notifyListeners();
-          return true;
-        }
+        medicine_list = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -46,13 +43,11 @@ class MedicineManagementProvider with ChangeNotifier {
         return false;
       } else {
         var body = res;
-        if (body) {
-          otc_medicine_list = body;
-          notifyListeners();
-          return true;
-        }
+        print(body);
+        otc_medicine_list = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -61,20 +56,19 @@ class MedicineManagementProvider with ChangeNotifier {
 
   Future<bool> getPrescriptionMedicines(deseaseId) async {
     try {
+      disease_medicine = [];
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest("${AppConstants.insertGetMedicineUrl}?query_type=disease&disease_id=$deseaseId");
+      }).getRequest(
+          "${AppConstants.insertGetMedicineUrl}?query_type=disease&disease_id=$deseaseId");
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          disease_medicine = body;
-          notifyListeners();
-          return true;
-        }
+        disease_medicine = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -85,18 +79,17 @@ class MedicineManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest('${AppConstants.insertGetMedicineUrl}?query_type=all_disease');
+      }).getRequest(
+          '${AppConstants.insertGetMedicineUrl}?query_type=all_disease');
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          medicine_list = body;
-          notifyListeners();
-          return true;
-        }
+        print(body);
+        all_prescription_medicine = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -112,7 +105,7 @@ class MedicineManagementProvider with ChangeNotifier {
         return {"save": false, "message": "Something went wrong"};
       } else {
         var body = res;
-        if (body('save')) {
+        if (body['save']) {
           return body;
         }
         return {"save": false, "message": "Something went wrong"};

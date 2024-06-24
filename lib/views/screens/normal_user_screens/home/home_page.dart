@@ -327,18 +327,20 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                           .toList(),
                     )
                   : Row(
-                      children: desease_list
-                          .map(
+                      children: value.getDiseaseList
+                          .map<Widget>(
                             (e) => TropoicalDiseaseWidget(
                               image: "assets/images/Malaria.jpg",
-                              category: "Malaria",
+                              category: e['name'],
                               numOfMeds: 18,
                               press: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DiseaseProductPage(),
+                                    builder: (context) => DiseaseProductPage(
+                                      diseaseId: e['id'],
+                                      diseaseName: e['name'],
+                                    ),
                                   ),
                                 );
                               },
@@ -379,9 +381,9 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
           ),
           SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Consumer<DiseaseManagementProvider>(
+              child: Consumer<MedicineManagementProvider>(
                   builder: (context, value, child) {
-                return value.getDiseaseList.isEmpty
+                return value.getOtcMedicineList.isEmpty
                     ? Row(
                         children: [1, 2]
                             .map(
@@ -390,17 +392,17 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                 addToFavorites: () {},
                                 isFavorite: true,
                                 updateCartCount: (int) {},
-                                title: "product name",
-                                dosage: "dosage",
-                                image: "assets/icons/female.png",
+                                title: "----",
+                                dosage: "----",
+                                image: "assets/image/dawa1.png",
                                 price: "---",
                               ),
                             )
                             .toList(),
                       )
                     : Row(
-                        children: otc_medicine_list
-                            .map((e) => Padding(
+                        children: value.getOtcMedicineList
+                            .map<Widget>((e) => Padding(
                                   padding: const EdgeInsets.only(left: 20),
                                   child: ProductCardWidget(
                                     product: e,
@@ -417,10 +419,10 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                     addToFavorites: () {},
                                     isFavorite: true,
                                     updateCartCount: (int) {},
-                                    title: "Panadol",
-                                    dosage: "2x3",
-                                    image: "assets/icons/female.png",
-                                    price: "2000",
+                                    title: e['name'],
+                                    dosage: e['dosage'],
+                                    image: "assets/images/dawa1.png",
+                                    price: e['price'],
                                   ),
                                 ))
                             .toList(),

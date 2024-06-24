@@ -5,9 +5,9 @@ import 'package:flutter_project_template/constants/app_constants.dart';
 import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class DiseaseManagementProvider with ChangeNotifier {
-  List<Map<String, dynamic>> disease_list = [];
+  var disease_list = [];
 
-  List<Map<String, dynamic>> get getDiseaseList => disease_list;
+  get getDiseaseList => disease_list;
 
   Future<bool> getDiseases() async {
     try {
@@ -18,13 +18,10 @@ class DiseaseManagementProvider with ChangeNotifier {
         return false;
       } else {
         var body = res;
-        if (body) {
-          disease_list = body;
-          notifyListeners();
-          return true;
-        }
+        disease_list = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -40,7 +37,8 @@ class DiseaseManagementProvider with ChangeNotifier {
         return {"save": false, "message": "Something went wrong"};
       } else {
         var body = res;
-        if (body('save')) {
+        if (body['save']) {
+          getDiseases();
           return body;
         }
         return {"save": false, "message": "Something went wrong"};

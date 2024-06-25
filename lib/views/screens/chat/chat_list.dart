@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, dead_code, prefer_typing_uninitialized_variables, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, dead_code, prefer_typing_uninitialized_variables, sized_box_for_whitespace, non_constant_identifier_names
 
 import 'dart:convert';
 
@@ -51,17 +51,11 @@ class _RecentChatsState extends State<RecentChats> {
   // }
 
   getUserData() async {
-    user = jsonDecode(
+    var new_user = jsonDecode(
         await SharedPreferencesManager().getString(AppConstants.user));
-
-    // print(user['id']);
-    // account = jsonDecode(
-    //     await SharedPreferencesManager().getString(AppConstants.userAccount));
-
-    if (user['id'] == account['user']['id']) {
-      print("They Match");
-    }
-    // print(account);
+    setState(() {
+      user = new_user;
+    });
   }
 
   String formatChatTime(DateTime timestamp) {
@@ -93,7 +87,7 @@ class _RecentChatsState extends State<RecentChats> {
 
     return Scaffold(
       appBar: AppBar(
-        // automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
         title: const Text(
           "Chat List",
           style: TextStyle(
@@ -101,6 +95,19 @@ class _RecentChatsState extends State<RecentChats> {
             fontSize: 20,
           ),
         ),
+        actions: [
+          IconButton(
+              splashRadius: 22,
+              onPressed: () async {
+                var data = {'initiator': user['id']};
+                Provider.of<ChatManagementProvider>(context, listen: false)
+                    .createChat(data);
+              },
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+              )),
+        ],
         centerTitle: true,
         elevation: 5,
         toolbarHeight: 60,
@@ -130,22 +137,21 @@ class _RecentChatsState extends State<RecentChats> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
-                        if (recordProvider.getChats[index]
-                                ['last_message_user'] !=
-                            user['id']) {
-                          recordProvider.conversationToSeen(
-                              recordProvider.getChats[index]['id']);
-                        }
-                        if (user['id'] ==
-                            recordProvider.getChats[index]['receiver']['id']) {
+                        // if (user['role'] == "NORMAL" &&
+                        //     recordProvider.getChats[index]
+                        //             ['last_message_user'] !=
+                        //         user['id']) {
+                        //   recordProvider.conversationToSeen(
+                        //       recordProvider.getChats[index]['id']);
+                        // }
+                        if (user['role'] == "ADMIN") {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => ChatScreen(
                                 name: recordProvider.getChats[index]
                                     ['initiator']['username'],
-                                userId: recordProvider.getChats[index]
-                                    ['receiver']['id'],
+                                userId: "ADMIN",
                                 conv_id: recordProvider.getChats[index]['id'],
                               ),
                             ),
@@ -155,10 +161,8 @@ class _RecentChatsState extends State<RecentChats> {
                             context,
                             MaterialPageRoute(
                               builder: (_) => ChatScreen(
-                                name: recordProvider.getChats[index]['receiver']
-                                    ['username'],
-                                userId: recordProvider.getChats[index]
-                                    ['receiver']['id'],
+                                name: "ADMIN",
+                                userId: "ADMIN",
                                 conv_id: recordProvider.getChats[index]['id'],
                               ),
                             ),
@@ -171,27 +175,23 @@ class _RecentChatsState extends State<RecentChats> {
                           horizontal: 10.0,
                         ),
                         decoration: BoxDecoration(
-                            color:
-                                recordProvider.getChats[index]['is_seen'] ==
-                                            false &&
-                                        user['id'] !=
-                                            recordProvider.getChats[index]
-                                                ['last_message_user']
-                                    ? const Color(0xFFFFEFEE)
-                                    : Colors.white,
+                            // color: recordProvider.getChats[index]['is_seen'] ==
+                            //             false &&
+                            //         user['id'] !=
+                            //             recordProvider.getChats[index]
+                            //                 ['last_message_user']
+                            //     ? const Color(0xFFFFEFEE)
+                            //     : Colors.white,
+                            color: Colors.white,
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(20.0),
                               bottomRight: Radius.circular(20.0),
                             )),
                         child: ListTile(
-                          leading: user['id'] ==
-                                  recordProvider.getChats[index]['receiver']
-                                      ['id']
+                          leading: user['role'] == "ADMIN"
                               ? CircleAvatar(
                                   child: Text(
-                                    recordProvider.getChats[index]['initiator']
-                                            ['username'][0]
-                                        .toUpperCase(),
+                                    "A",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 24),
@@ -199,15 +199,11 @@ class _RecentChatsState extends State<RecentChats> {
                                 )
                               : CircleAvatar(
                                   child: Text(
-                                      recordProvider.getChats[index]['receiver']
-                                              ['username'][0]
-                                          .toUpperCase(),
+                                      "A",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 24))),
-                          title: user['id'] ==
-                                  recordProvider.getChats[index]['receiver']
-                                      ['id']
+                          title: user['role'] == "ADMIN"
                               ? Text(
                                   recordProvider.getChats[index]['initiator']
                                       ['username'],
@@ -219,8 +215,7 @@ class _RecentChatsState extends State<RecentChats> {
                                   ),
                                 )
                               : Text(
-                                  recordProvider.getChats[index]['receiver']
-                                      ['username'],
+                                  "ADMIN",
                                   style: const TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     fontSize: 14.0,
@@ -242,33 +237,33 @@ class _RecentChatsState extends State<RecentChats> {
                               const SizedBox(
                                 height: 5.0,
                               ),
-                              recordProvider.getChats[index]['is_seen'] ==
-                                          false &&
-                                      user['id'] !=
-                                          recordProvider.getChats[index]
-                                              ['last_message_user']
-                                  ? Container(
-                                      width: 40.0,
-                                      height: 20.0,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: const Text(
-                                        'NEW',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.0,
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      width: 40,
-                                      height: 20,
-                                    )
+                              // recordProvider.getChats[index]['is_seen'] ==
+                              //             false &&
+                              //         user['id'] !=
+                              //             recordProvider.getChats[index]
+                              //                 ['last_message_user']
+                              //     ? Container(
+                              //         width: 40.0,
+                              //         height: 20.0,
+                              //         decoration: BoxDecoration(
+                              //           color: Theme.of(context).primaryColor,
+                              //           borderRadius:
+                              //               BorderRadius.circular(30.0),
+                              //         ),
+                              //         alignment: Alignment.center,
+                              //         child: const Text(
+                              //           'NEW',
+                              //           style: TextStyle(
+                              //             color: Colors.white,
+                              //             fontWeight: FontWeight.bold,
+                              //             fontSize: 12.0,
+                              //           ),
+                              //         ),
+                              //       )
+                              //     : Container(
+                              //         width: 40,
+                              //         height: 20,
+                              //       )
                             ],
                           ),
                         ),

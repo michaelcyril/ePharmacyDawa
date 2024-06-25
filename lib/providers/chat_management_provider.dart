@@ -18,7 +18,7 @@ class ChatManagementProvider extends ChangeNotifier {
   get getReturnedConvId => _returned_conv_id;
   List<dynamic>? get myLikesAccounts => _my_likes_accounts;
 
-  Future<bool> createChat(var data, ctx) async {
+  Future<bool> createChat(var data) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
@@ -46,13 +46,20 @@ class ChatManagementProvider extends ChangeNotifier {
     try {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var user = localStorage.getString("user");
+      var user_type;
+      if (jsonDecode(user!)['role'] == "ADMIN") {
+        user_type = "admin";
+      } else {
+        user_type = "normal";
+      }
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
       }).getRequest(
-          '${AppConstants.conversationListViewUrl}?user_id=${jsonDecode(user!)['id']}');
+          '${AppConstants.conversationListViewUrl}?user_id=${jsonDecode(user)['id']}&user_type=$user_type');
       if (res == null) {
       } else {
         var body = res;
+        print(body);
         _chats = body;
       }
       notifyListeners();

@@ -176,7 +176,7 @@ class _ChatScreenState extends State<ChatScreen> {
       // Uri.parse(
       //     'ws://192.168.43.68:8000/chat-room-conversation/${widget.conv_id}'),
       Uri.parse(
-          'ws://157.245.109.105:8000/chat-room-conversation/${widget.conv_id}'),
+          'ws://192.168.206.193:8000/chat-room-conversation/${widget.conv_id}'),
     );
     Future.delayed(Duration.zero, () {
       // Move the logic outside of the build method

@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, await_only_futures
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/models/product_model.dart';
 import 'package:flutter_project_template/providers/cart_management_provider.dart';
 import 'package:flutter_project_template/providers/order_management_provider.dart';
+import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/cart/component/cart_product.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +16,22 @@ class CartPageScreen extends StatefulWidget {
 }
 
 class _CartPageScreenState extends State<CartPageScreen> {
+  var userData;
+
+  setUserData() {
+    var data =
+        Provider.of<UserManagementProvider>(context, listen: false).getUserData;
+    setState(() {
+      userData = data;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,19 +123,32 @@ class _CartPageScreenState extends State<CartPageScreen> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () async {
-                        var data = {
-                          "client": "ddddd",
-                          "prescription": "ddddd",
-                          "total_price": "ddddd",
-                          "medicines": [
-                            {"medicine": "uuid", "dosage": "2x3"},
-                            {"medicine": "uuid", "dosage": "2x3"},
-                          ],
+                        Map<String, CartItem> cart_data =
+                            await Provider.of<CartManagementProvider>(context,
+                                    listen: false)
+                                .items;
+                        List<Map<String, dynamic>> orderMedicine =
+                            cart_data.values.map((item) {
+                          return {
+                            'medicine': item.id,
+                            'dosage': 'dosage_value'
+                          };
+                        }).toList();
+
+                        var total_price =
+                            await Provider.of<CartManagementProvider>(context,
+                                    listen: false)
+                                .totalAmount;
+
+                        Map<String, dynamic> orderData = {
+                          'client': userData['id'],
+                          'total_price': total_price,
+                          'order_medicine': orderMedicine
                         };
                         Map<String, dynamic> res =
                             await Provider.of<OrderManagementProvider>(context,
                                     listen: false)
-                                .addOrder(data);
+                                .addOrder(orderData);
                         if (res['save']) {
                           Provider.of<CartManagementProvider>(context,
                                   listen: false)

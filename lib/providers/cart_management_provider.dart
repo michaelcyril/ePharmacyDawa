@@ -43,10 +43,11 @@ class CartManagementProvider with ChangeNotifier {
           id: product['id'],
           title: product['name'],
           quantity: 1,
-          price: product['price'],
+          price: double.parse(product['price']),
         ),
       );
     }
+    print(_items);
     notifyListeners();
   }
 

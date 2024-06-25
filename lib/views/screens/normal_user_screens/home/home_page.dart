@@ -110,7 +110,7 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                       // const SizedBox(width: 8),
                       IconButtonWIthCounter(
                         image: "assets/images/cart.png",
-                        numOfitem: itemCount,
+                        numOfitem: Provider.of<CartManagementProvider>(context, listen: true).itemCount,
                         press: () {
                           Navigator.push(
                               context,
@@ -430,7 +430,13 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                     },
                                     addToFavorites: () {},
                                     isFavorite: true,
-                                    updateCartCount: (int) {},
+                                    updateCartCount: (int) {
+                                      print("object=====");
+                                      Provider.of<CartManagementProvider>(
+                                              context,
+                                              listen: false)
+                                          .addItem(e);
+                                    },
                                     title: e['name'],
                                     dosage: e['dosage'],
                                     image: "assets/images/dawa1.png",

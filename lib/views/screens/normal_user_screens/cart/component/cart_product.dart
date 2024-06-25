@@ -14,12 +14,14 @@ class CartProductWidget extends StatefulWidget {
 }
 
 class _CartProductWidgetState extends State<CartProductWidget> {
-  removeFromCart(productId){
-    Provider.of<CartManagementProvider>(context, listen: false).removeItem(productId);
+  removeFromCart(productId) {
+    Provider.of<CartManagementProvider>(context, listen: false)
+        .removeItem(productId);
   }
 
-  decrementProduct(productId){
-    Provider.of<CartManagementProvider>(context, listen: false).removeSingleItem(productId);
+  decrementProduct(productId) {
+    Provider.of<CartManagementProvider>(context, listen: false)
+        .removeSingleItem(productId);
   }
 
   @override
@@ -36,7 +38,7 @@ class _CartProductWidgetState extends State<CartProductWidget> {
                 color: const Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset("assets/images/article.jpg"),
+              child: Image.asset("assets/images/dawa1.png"),
             ),
           ),
         ),
@@ -44,20 +46,20 @@ class _CartProductWidgetState extends State<CartProductWidget> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Panadol",
-              style: TextStyle(color: Colors.black, fontSize: 16),
+            Text(
+              widget.cartValue.title,
+              style: const TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
             const SizedBox(height: 8),
             Text.rich(
               TextSpan(
-                text: "\Tsh600.0",
+                text: "\Tsh${widget.cartValue.price}",
                 style: const TextStyle(
                     fontWeight: FontWeight.w600, color: Color(0xFFFF7643)),
                 children: [
                   TextSpan(
-                      text: " x2",
+                      text: " x${widget.cartValue.quantity}",
                       style: Theme.of(context).textTheme.bodyLarge),
                 ],
               ),

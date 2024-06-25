@@ -166,7 +166,7 @@ class OrderManagementProvider with ChangeNotifier {
         return {"save": false, "message": "Something went wrong"};
       } else {
         var body = res;
-        if (body('save')) {
+        if (body['save']) {
           return body;
         }
         return {"save": false, "message": "Something went wrong"};

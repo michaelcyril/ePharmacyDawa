@@ -64,7 +64,7 @@ class _on_boardingState extends State<on_boarding> {
               onLastpage
                   ? GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const GetStartedScreen(),

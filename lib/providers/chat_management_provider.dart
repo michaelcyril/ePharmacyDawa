@@ -59,7 +59,6 @@ class ChatManagementProvider extends ChangeNotifier {
       if (res == null) {
       } else {
         var body = res;
-        print(body);
         _chats = body;
       }
       notifyListeners();
@@ -121,57 +120,6 @@ class ChatManagementProvider extends ChangeNotifier {
     }
   }
 
-  // Future<bool> likeAccount(accountLikedId) async {
-  //   var userAccount =
-  //       await SharedPreferencesManager().getString(AppConstants.userAccount);
-  //   var data = {
-  //     "account": accountLikedId,
-  //     "likedBy": jsonDecode(userAccount)['id'],
-  //   };
-  //   try {
-  //     var res = await ApiClientHttp(headers: <String, String>{
-  //       'Content-Type': 'application/json',
-  //     }).postRequest(AppConstants.conversationListViewUrl, data);
-  //     if (res == null) {
-  //       return false;
-  //     } else {
-  //       var body = res;
-  //       if (body['like']) {
-  //         getMyLikesAccounts(ctx);
-  //         notifyListeners();
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //     return false;
-  //   }
-  // }
-
-  // Future<void> getMyLikesAccounts(ctx) async {
-  //   try {
-  //     var userAccount =
-  //         await SharedPreferencesManager().getString(AppConstants.userAccount);
-  //     var res = await ApiClientHttp(headers: <String, String>{
-  //       'Content-Type': 'application/json',
-  //     }).getRequest(
-  //         '${AppConstants.likeAccountUrl}?accountId=${jsonDecode(userAccount)['id']}');
-  //     if (res == null) {
-  //     } else {
-  //       var body = res;
-  //       _my_likes_accounts = body;
-  //       // print("body :: $body");
-
-  //       notifyListeners();
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
-
-//DECODING THE TEXT SUGGESTED BY STACKOVERFLOW PIPO    https://stackoverflow.com/questions/57277829/flutter-text-widget-emojis
   String utf8convert(String text) {
     List<int> bytes = text.toString().codeUnits;
     return utf8.decode(bytes);

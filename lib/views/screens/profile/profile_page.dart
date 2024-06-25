@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
+import 'package:flutter_project_template/shared-preference-manager/preference-manager.dart';
+import 'package:flutter_project_template/views/screens/auth/phone_number_screen.dart';
 import 'package:flutter_project_template/views/screens/profile/component/profile_menu.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePageScreen extends StatefulWidget {
@@ -63,10 +66,10 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                           backgroundColor: const Color(0xFFF5F6F9),
                         ),
                         onPressed: () async {
-                          final picker = ImagePicker();
-                          final pickedFile = await picker.getImage(
-                              source: ImageSource.gallery);
-                          if (pickedFile != null) {}
+                          // final picker = ImagePicker();
+                          // final pickedFile = await picker.getImage(
+                          //     source: ImageSource.gallery);
+                          // if (pickedFile != null) {}
                         },
                         child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
                       ),
@@ -85,20 +88,20 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
               },
             ),
             ProfileMenuWidget(
-              text: "Notifications",
-              icon: "assets/icons/Bell.svg",
+              text: userData['phone'],
+              icon: "assets/icons/Phone.svg",
               color: const Color.fromARGB(255, 0, 136, 102),
               press: () {},
             ),
             ProfileMenuWidget(
-              text: "Settings",
-              icon: "assets/icons/Settings.svg",
+              text: userData['gender'],
+              icon: "assets/icons/Gender.svg",
               color: const Color.fromARGB(255, 0, 136, 102),
               press: () {},
             ),
             ProfileMenuWidget(
-              text: "Help Center",
-              icon: "assets/icons/Question mark.svg",
+              text: userData['role'],
+              icon: "assets/icons/Category.svg",
               color: const Color.fromARGB(255, 0, 136, 102),
               press: () {},
             ),
@@ -106,7 +109,14 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
               text: "Log Out",
               icon: "assets/icons/Log out.svg",
               color: const Color.fromARGB(255, 0, 136, 102),
-              press: () {},
+              press: () {
+                SharedPreferencesManager().clearPreference();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PhoneNumberScreen(),
+                    ));
+              },
             ),
           ],
         ),

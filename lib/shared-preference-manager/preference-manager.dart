@@ -7,7 +7,6 @@ class SharedPreferencesManager {
     _prefs = await SharedPreferences.getInstance();
   }
 
-
   Future<bool> saveBool(String key, bool value) async {
     await init();
     return await _prefs.setBool(key, value);
@@ -56,5 +55,10 @@ class SharedPreferencesManager {
   Future<List<String>> getStringList(String key) async {
     await init();
     return _prefs.getStringList(key) ?? [];
+  }
+
+  Future<void> clearPreference() async {
+    await init();
+    _prefs.clear();
   }
 }

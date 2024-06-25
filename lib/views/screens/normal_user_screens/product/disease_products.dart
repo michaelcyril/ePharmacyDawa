@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/medicine_management_provider.dart';
+import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/component/disease_product_widget.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/product_details.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +18,11 @@ class DiseaseProductPage extends StatefulWidget {
 }
 
 class _DiseaseProductPageState extends State<DiseaseProductPage> {
+  var userData;
   @override
   void initState() {
     super.initState();
+    setUserData();
     Provider.of<MedicineManagementProvider>(
       context,
       listen: false,
@@ -27,6 +30,14 @@ class _DiseaseProductPageState extends State<DiseaseProductPage> {
   }
 
   var dawa_list = [1, 2, 3, 4];
+
+  setUserData() {
+    var data =
+        Provider.of<UserManagementProvider>(context, listen: false).getUserData;
+    setState(() {
+      userData = data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +102,8 @@ class _DiseaseProductPageState extends State<DiseaseProductPage> {
                           dosage: value.getDiseaseMedicineList[index]['dosage'],
                           price: value.getDiseaseMedicineList[index]['price'],
                           isFavorite: false,
+                          userRole: userData['role'],
+                          updateCartCount: (int) {},
                         ),
                       );
               },

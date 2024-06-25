@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, dead_code
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class DiseaseProductCardWidget extends StatelessWidget {
   const DiseaseProductCardWidget(
@@ -14,7 +14,9 @@ class DiseaseProductCardWidget extends StatelessWidget {
       required this.dosage,
       required this.price,
       required this.isFavorite,
-      this.disease});
+      this.disease,
+      this.userRole,
+      required this.updateCartCount});
 
   final disease;
   final double width, aspectRatio;
@@ -24,6 +26,8 @@ class DiseaseProductCardWidget extends StatelessWidget {
   final price;
   final isFavorite;
   final VoidCallback onPress;
+  final userRole;
+  final Function(int) updateCartCount;
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +87,23 @@ class DiseaseProductCardWidget extends StatelessWidget {
                           : const Color(0xFF979797).withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: SvgPicture.asset(
-                      "assets/icons/Heart Icon_2.svg",
-                      color: true
-                          ? const Color(0xFFFF4848)
-                          : const Color(0xFFDBDEE4),
-                    ),
+                    child: userRole == null
+                        ? const SizedBox()
+                        : userRole == "NORMAL"
+                            ? InkWell(
+                                borderRadius: BorderRadius.circular(50),
+                                onTap: () {
+                                  updateCartCount(1);
+                                },
+                                child: const Center(
+                                  child: Icon(
+                                    CupertinoIcons.add_circled_solid,
+                                    color: Color(0xFFFF7643),
+                                    size: 24,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
                   ),
                 ),
               ],

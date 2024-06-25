@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TropoicalDiseaseWidget extends StatelessWidget {
-  const TropoicalDiseaseWidget(
-      {super.key,
-      required this.category,
-      required this.image,
-      required this.numOfMeds,
-      required this.press});
+  const TropoicalDiseaseWidget({
+    super.key,
+    required this.category,
+    required this.image,
+    required this.numOfMeds,
+    required this.press,
+  });
 
   final String category, image;
   final int numOfMeds;

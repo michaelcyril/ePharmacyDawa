@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/cart_management_provider.dart';
 import 'package:flutter_project_template/providers/disease_management_provider.dart';
 import 'package:flutter_project_template/providers/medicine_management_provider.dart';
+import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/cart/cart_page.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/product_card_widget.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/tropical_disease_card.dart';
@@ -22,9 +23,12 @@ class HomePageNormalUserScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageNormalUserScreen> {
+  var userData;
+
   @override
   void initState() {
     super.initState();
+    setUserData();
     getItemCounts();
     Provider.of<DiseaseManagementProvider>(
       context,
@@ -42,6 +46,14 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
         Provider.of<CartManagementProvider>(context, listen: false).itemCount;
     setState(() {
       itemCount = itemC;
+    });
+  }
+
+  setUserData() {
+    var data =
+        Provider.of<UserManagementProvider>(context, listen: false).getUserData;
+    setState(() {
+      userData = data;
     });
   }
 
@@ -423,6 +435,7 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                     dosage: e['dosage'],
                                     image: "assets/images/dawa1.png",
                                     price: e['price'],
+                                    userRole: userData['role'],
                                   ),
                                 ))
                             .toList(),

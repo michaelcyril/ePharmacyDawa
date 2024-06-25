@@ -96,17 +96,19 @@ class _RecentChatsState extends State<RecentChats> {
           ),
         ),
         actions: [
-          IconButton(
-              splashRadius: 22,
-              onPressed: () async {
-                var data = {'initiator': user['id']};
-                Provider.of<ChatManagementProvider>(context, listen: false)
-                    .createChat(data);
-              },
-              icon: const Icon(
-                Icons.notifications,
-                color: Colors.white,
-              )),
+          user != null && user['role'] == "NORMAL"
+              ? IconButton(
+                  splashRadius: 22,
+                  onPressed: () async {
+                    var data = {'initiator': user['id']};
+                    Provider.of<ChatManagementProvider>(context, listen: false)
+                        .createChat(data);
+                  },
+                  icon: const Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                  ))
+              : SizedBox(),
         ],
         centerTitle: true,
         elevation: 5,
@@ -198,8 +200,7 @@ class _RecentChatsState extends State<RecentChats> {
                                   ),
                                 )
                               : CircleAvatar(
-                                  child: Text(
-                                      "A",
+                                  child: Text("A",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 24))),

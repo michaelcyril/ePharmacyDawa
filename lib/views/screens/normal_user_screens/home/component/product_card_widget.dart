@@ -16,7 +16,8 @@ class ProductCardWidget extends StatelessWidget {
       this.title,
       this.dosage,
       this.image,
-      this.price});
+      this.price,
+      this.userRole});
 
   final double width, aspectRatio;
   final product;
@@ -28,6 +29,7 @@ class ProductCardWidget extends StatelessWidget {
   final Function(int) updateCartCount;
   final Function() addToFavorites;
   final bool isFavorite;
+  final userRole;
 
   @override
   Widget build(BuildContext context) {
@@ -51,23 +53,27 @@ class ProductCardWidget extends StatelessWidget {
                     child: Image.asset(image),
                   ),
                 ),
-                Positioned(
-                  bottom: 5,
-                  right: 5,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(50),
-                    onTap: () {
-                      updateCartCount(1);
-                    },
-                    child: const Center(
-                      child: Icon(
-                        CupertinoIcons.add_circled_solid,
-                        color: Color(0xFFFF7643),
-                        size: 24,
-                      ),
-                    ),
-                  ),
-                ),
+                userRole == null
+                    ? const SizedBox()
+                    : userRole == "NORMAL"
+                        ? Positioned(
+                            bottom: 5,
+                            right: 5,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(50),
+                              onTap: () {
+                                updateCartCount(1);
+                              },
+                              child: const Center(
+                                child: Icon(
+                                  CupertinoIcons.add_circled_solid,
+                                  color: Color(0xFFFF7643),
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
               ],
             ),
             const SizedBox(height: 8),

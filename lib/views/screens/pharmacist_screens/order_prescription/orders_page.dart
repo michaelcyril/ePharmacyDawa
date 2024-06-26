@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/order_management_provider.dart';
-import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/component/order_card.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/component/order_card_complete.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +58,7 @@ class _OrdersPageScreenState extends State<OrdersPagePharmacistScreen> {
               ? const Center(child: Text("No Order History"))
               : ListView(
                   children: value.getPharmacistOrderHistoryList
-                      .map<Widget>((e) => OrderCardPharmacistWidget(
+                      .map<Widget>((e) => OrderCardCompletePharmacistWidget(
                           data: e,
                           confirmation: "",
                           mainText: "Order ID: ${e['order_id']}",

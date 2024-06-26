@@ -104,29 +104,10 @@ class _OrderCardCompleteWidgetState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 232, 233, 233),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Text(
-                              //   "Cancel",
-                              //   style: TextStyle(
-                              //     fontSize: 15,
-                              //     fontWeight: FontWeight.w600,
-                              //     color: Color.fromARGB(255, 61, 61, 61),
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
+                        padding: EdgeInsets.only(right: 10),
+                        child: SizedBox(),
                       ),
                     ),
                     Expanded(

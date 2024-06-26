@@ -1,17 +1,18 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/order_details_page.dart';
 
-class OrderCardWidget extends StatefulWidget {
-  const OrderCardWidget(
+class OrderCardCompletePharmacistWidget extends StatefulWidget {
+  const OrderCardCompletePharmacistWidget(
       {super.key,
       required this.mainText,
       required this.orderNo,
       required this.image,
       required this.date,
       required this.time,
-      required this.confirmation, this.data});
+      required this.confirmation,
+      this.data});
   final String mainText;
   final String orderNo;
   final String image;
@@ -21,10 +22,12 @@ class OrderCardWidget extends StatefulWidget {
   final data;
 
   @override
-  State<OrderCardWidget> createState() => _OrderCardWidgetState();
+  State<OrderCardCompletePharmacistWidget> createState() =>
+      _OrderCardCompleteWidgetState();
 }
 
-class _OrderCardWidgetState extends State<OrderCardWidget> {
+class _OrderCardCompleteWidgetState
+    extends State<OrderCardCompletePharmacistWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -113,14 +116,14 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Cancel",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 61, 61, 61),
-                                ),
-                              ),
+                              // Text(
+                              //   "Cancel",
+                              //   style: TextStyle(
+                              //     fontSize: 15,
+                              //     fontWeight: FontWeight.w600,
+                              //     color: Color.fromARGB(255, 61, 61, 61),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

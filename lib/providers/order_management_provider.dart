@@ -6,41 +6,63 @@ import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class OrderManagementProvider with ChangeNotifier {
   // Client Order Management
-  List<Map<String, dynamic>> client_pending_order = [];
-  List<Map<String, dynamic>> clint_order_history = [];
-  List<Map<String, dynamic>> client_canceled_order = [];
+  var client_pending_order = [];
+  var clint_order_history = [];
+  var client_canceled_order = [];
 
-  List<Map<String, dynamic>> get getClientPendiOrderList => client_pending_order;
-  List<Map<String, dynamic>> get getClientOrderHistoryList => clint_order_history;
-  List<Map<String, dynamic>> get getClientCanceledOrderList => client_canceled_order;
+  get getClientPendiOrderList => client_pending_order;
+  get getClientOrderHistoryList => clint_order_history;
+  get getClientCanceledOrderList => client_canceled_order;
 
   // Pharmacy Order Management
-  List<Map<String, dynamic>> pharmacist_pending_order = [];
-  List<Map<String, dynamic>> pharmacist_order_history = [];
-  List<Map<String, dynamic>> pharmacist_canceled_order = [];
+  var pharmacist_pending_order = [];
+  var pharmacist_order_history = [];
+  var pharmacist_canceled_order = [];
 
-  List<Map<String, dynamic>> get getPharmacistPendiOrderList => pharmacist_pending_order;
-  List<Map<String, dynamic>> get getPharmacistOrderHistoryList => pharmacist_order_history;
-  List<Map<String, dynamic>> get getPharmacistCanceledOrderList => pharmacist_canceled_order;
+  get getPharmacistPendiOrderList => pharmacist_pending_order;
+  get getPharmacistOrderHistoryList => pharmacist_order_history;
+  get getPharmacistCanceledOrderList => pharmacist_canceled_order;
+
+  // Order Products
+  var order_products = [];
+
+  get getOrderProductList => order_products;
 
 
+  Future<bool> getOrderProducts(order_id) async {
+    try {
+      order_products = [];
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).getRequest('${AppConstants.getOrderProductsUrl}?order_id=$order_id');
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        order_products = body;
+        notifyListeners();
+        return true;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 
   Future<bool> clientPendingOrders(clientId) async {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=PENDING');
+      }).getRequest(
+          '${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=PENDING');
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          client_pending_order = body;
-          notifyListeners();
-          return true;
-        }
+        client_pending_order = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -51,18 +73,16 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=COMPLETE');
+      }).getRequest(
+          '${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=COMPLETE');
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          clint_order_history = body;
-          notifyListeners();
-          return true;
-        }
+        clint_order_history = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -73,18 +93,16 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=CANCELED');
+      }).getRequest(
+          '${AppConstants.insertGetOrderUrl}?query_type=client_order&client_id=$clientId&order_status=CANCELED');
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          client_canceled_order = body;
-          notifyListeners();
-          return true;
-        }
+        client_canceled_order = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -95,18 +113,16 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=PENDING');
+      }).getRequest(
+          '${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=PENDING');
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          pharmacist_pending_order = body;
-          notifyListeners();
-          return true;
-        }
+        pharmacist_pending_order = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -117,18 +133,16 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=COMPLETE');
+      }).getRequest(
+          '${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=COMPLETE');
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          pharmacist_order_history = body;
-          notifyListeners();
-          return true;
-        }
+        pharmacist_order_history = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -139,18 +153,16 @@ class OrderManagementProvider with ChangeNotifier {
     try {
       var res = await ApiClientHttp(headers: <String, String>{
         'Content-Type': 'application/json',
-      }).getRequest('${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=CANCELED');
+      }).getRequest(
+          '${AppConstants.insertGetOrderUrl}?query_type=pharmacist_order&order_status=CANCELED');
       if (res == null) {
         return false;
       } else {
         var body = res;
-        if (body) {
-          pharmacist_canceled_order = body;
-          notifyListeners();
-          return true;
-        }
+        pharmacist_canceled_order = body;
+        notifyListeners();
+        return true;
       }
-      return false;
     } catch (e) {
       debugPrint(e.toString());
       return false;
@@ -207,6 +219,32 @@ class OrderManagementProvider with ChangeNotifier {
       } else {
         var body = res;
         if (body['delete']) {
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> acceptOrder(orderId) async {
+    try {
+      var data = {
+        'id': orderId,
+        'status': 'COMPLETE',
+      };
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).postRequest(AppConstants.updateOrderStatusUrl, data);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body['success']) {
+          pharmacistPendingOrders();
+          pharmacistOrdersHistory();
           return true;
         }
       }

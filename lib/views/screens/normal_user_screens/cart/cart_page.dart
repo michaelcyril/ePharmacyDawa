@@ -68,7 +68,7 @@ class _CartPageScreenState extends State<CartPageScreen> {
             return value.items.isEmpty
                 ? const Center(child: Text("Empty Cart"))
                 : ListView.builder(
-                    itemCount: 2,
+                    itemCount: value.items.length,
                     itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: CartProductWidget(
@@ -131,7 +131,9 @@ class _CartPageScreenState extends State<CartPageScreen> {
                             cart_data.values.map((item) {
                           return {
                             'medicine': item.id,
-                            'dosage': 'dosage_value'
+                            'dosage': 'dosage_value',
+                            'total_amount': item.price * item.quantity,
+                            'quantity': item.quantity
                           };
                         }).toList();
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/component/order_card.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class OrderRequestPage extends StatefulWidget {
@@ -57,13 +58,16 @@ class _OrderRequestPageState extends State<OrderRequestPage> {
               ? const Center(child: Text("No Order Requests"))
               : ListView(
                   children: value.getPharmacistPendiOrderList
-                      .map<Widget>((e) => const OrderCardPharmacistWidget(
-                            confirmation: "Pending",
-                            mainText: "Prescription 1",
-                            orderNo: "ID8239",
-                            date: "10/04/2024",
-                            time: "10:30 AM",
-                            image: "assets/images/pharmacist3.png",
+                      .map<Widget>((e) => OrderCardPharmacistWidget(
+                          data: e,
+                          confirmation: "",
+                          mainText: "Order ID: ${e['order_id']}",
+                          orderNo: e['status'],
+                          date: DateFormat('yyyy-MM-dd')
+                              .format(DateTime.parse(e['created_at'])),
+                          time: DateFormat('HH:mm')
+                              .format(DateTime.parse(e['created_at'])),
+                          image: "assets/images/pharmacist3.png",
                           ))
                       .toList(),
                 );

@@ -1,7 +1,9 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/order_details_page.dart';
+import 'package:provider/provider.dart';
 
 class OrderCardPharmacistWidget extends StatefulWidget {
   const OrderCardPharmacistWidget(
@@ -12,7 +14,8 @@ class OrderCardPharmacistWidget extends StatefulWidget {
       required this.date,
       required this.time,
       required this.confirmation,
-      this.prescription});
+      this.prescription,
+      this.data});
   final prescription;
   final String mainText;
   final String orderNo;
@@ -20,6 +23,7 @@ class OrderCardPharmacistWidget extends StatefulWidget {
   final String date;
   final String time;
   final String confirmation;
+  final data;
 
   @override
   State<OrderCardPharmacistWidget> createState() => _OrderCardWidgetState();
@@ -105,24 +109,31 @@ class _OrderCardWidgetState extends State<OrderCardPharmacistWidget> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 232, 233, 233),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Cancel",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 61, 61, 61),
+                        child: InkWell(
+                          onTap: () {
+                            Provider.of<OrderManagementProvider>(context,
+                                    listen: false)
+                                .acceptOrder(widget.data['id']);
+                          },
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 232, 233, 233),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Accept Order",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 61, 61, 61),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -136,7 +147,7 @@ class _OrderCardWidgetState extends State<OrderCardPharmacistWidget> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const OrderDetailsPageScreen(),
+                                      OrderDetailsPageScreen(data: widget.data),
                                 ));
                           },
                           child: Container(

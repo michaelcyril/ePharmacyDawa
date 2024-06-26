@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/component/order_card.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PendingOrderTab extends StatefulWidget {
@@ -32,19 +33,24 @@ class _PendingOrderTabState extends State<PendingOrderTab> {
     return Consumer<OrderManagementProvider>(builder: (context, value, child) {
       return value.getClientPendiOrderList.isEmpty
           ? const Center(child: Text("No Pending Order"))
-          : Column(
-              children: value.getClientPendiOrderList
-                  .map<Widget>(
-                    (e) => const OrderCardWidget(
-                      confirmation: "Pending",
-                      mainText: "Prescription 1",
-                      orderNo: "ID8239",
-                      date: "10/04/2024",
-                      time: "10:30 AM",
-                      image: "assets/images/pharmacist3.png",
-                    ),
-                  )
-                  .toList());
+          : SingleChildScrollView(
+              child: Column(
+                  children: value.getClientPendiOrderList
+                      .map<Widget>(
+                        (e) => OrderCardWidget(
+                          data: e,
+                          confirmation: "",
+                          mainText: "Order ID: ${e['order_id']}",
+                          orderNo: e['status'],
+                          date: DateFormat('yyyy-MM-dd')
+                              .format(DateTime.parse(e['created_at'])),
+                          time: DateFormat('HH:mm')
+                              .format(DateTime.parse(e['created_at'])),
+                          image: "assets/images/pharmacist3.png",
+                        ),
+                      )
+                      .toList()),
+            );
     });
   }
 }

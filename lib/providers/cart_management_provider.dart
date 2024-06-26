@@ -32,6 +32,7 @@ class CartManagementProvider with ChangeNotifier {
         (existingCartItem) => CartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
+          dosage: existingCartItem.dosage,
           quantity: existingCartItem.quantity + 1,
           price: existingCartItem.price,
         ),
@@ -42,6 +43,7 @@ class CartManagementProvider with ChangeNotifier {
         () => CartItem(
           id: product['id'],
           title: product['name'],
+          dosage: product['dosage'],
           quantity: 1,
           price: double.parse(product['price']),
         ),
@@ -66,6 +68,7 @@ class CartManagementProvider with ChangeNotifier {
         (existingCartItem) => CartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
+          dosage: existingCartItem.dosage,
           quantity: existingCartItem.quantity - 1,
           price: existingCartItem.price,
         ),

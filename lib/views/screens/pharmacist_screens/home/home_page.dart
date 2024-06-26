@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/disease/desease_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/home/component/home_card.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/order_request_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/orders_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/prescriptions_page.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/product/otc_medicines_page.dart';
@@ -125,7 +126,13 @@ class _PharmacistHomePageScreenState extends State<PharmacistHomePageScreen> {
                     gradientEndColor: const Color(0xffF0B31A),
                   ),
                   DiscoverSmallCard(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const OrderRequestPage(),
+                          ));
+                    },
                     title: "Order Requests",
                     gradientStartColor: const Color(0xffe8eaf6),
                     gradientEndColor: const Color(0xffe1bee7),

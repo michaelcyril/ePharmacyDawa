@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template/providers/default_provider.dart';
+import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +23,8 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
   @override
   void initState() {
     super.initState();
-    // Provider.of<OrderProvider>(context, listen: false)
-    //     .getAllOrderProducts(widget.data['id']);
+    Provider.of<OrderManagementProvider>(context, listen: false)
+        .getOrderProducts(widget.data['id']);
   }
 
   @override
@@ -79,14 +79,14 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Order ID: 11111111",
+                          "Order ID: ${widget.data['order_id']}",
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
                               color: Colors.black45),
                         ),
                         Text(
-                          "Placed On: 12/12/2024",
+                          "Placed On: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.data['created_at']))} ${DateFormat('HH:mm').format(DateTime.parse(widget.data['created_at']))}",
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
@@ -145,7 +145,7 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Kimara",
+                          widget.data['client']['address'],
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
@@ -174,7 +174,7 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
                   ),
                   Expanded(
                     child: Text(
-                      "0693331836",
+                      widget.data['client']['phone'],
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
@@ -241,58 +241,58 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
                 ],
               ),
               Divider(),
-              Consumer<DefaultProvider>(
+              Consumer<OrderManagementProvider>(
                   builder: (context, recordProvider, child) {
-                return   Column(
-                        children: [1,2,3]
-                            .map(
-                              (e) => Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "Paracetamol",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14,
-                                          color: Colors.black45),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "1200",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14,
-                                          color: Colors.black45),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      "2",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14,
-                                          color: Colors.black45),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "2400",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14,
-                                          color: Colors.black45),
-                                    ),
-                                  ),
-                                ],
+                return Column(
+                  children: recordProvider.order_products
+                      .map(
+                        (e) => Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                e['medicine']['name'],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.black45),
                               ),
-                            )
-                            .toList(),
-                      );
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                e['medicine']['price'].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.black45),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                e['quantity'].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.black45),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                e['total_amount'].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.black45),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                );
               }),
               SizedBox(
                 height: 20,
@@ -320,32 +320,7 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
                             ),
                             Expanded(
                               child: Text(
-                                "7200",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                    color: Colors.black),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: const [
-                            Expanded(
-                              child: Text(
-                                "Delivery",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: Colors.black),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                "1,000",
+                                widget.data['total_price'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14,
@@ -370,7 +345,7 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
                             ),
                             Expanded(
                               child: Text(
-                                "7200", 
+                                widget.data['total_price'].toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14,

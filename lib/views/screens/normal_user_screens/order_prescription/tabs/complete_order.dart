@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/order_management_provider.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/component/order_card.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/component/order_card_complete.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CompleteOrderTab extends StatefulWidget {
@@ -35,12 +36,15 @@ class _PendingOrderTabState extends State<CompleteOrderTab> {
           : Column(
               children: value.getClientOrderHistoryList
                   .map<Widget>(
-                    (e) => const OrderCardWidget(
-                      confirmation: "Pending",
-                      mainText: "Prescription 1",
-                      orderNo: "ID8239",
-                      date: "10/04/2024",
-                      time: "10:30 AM",
+                    (e) => OrderCardCompleteWidget(
+                      data: e,
+                      confirmation: "",
+                      mainText: "Order ID: ${e['order_id']}",
+                      orderNo: e['status'],
+                      date: DateFormat('yyyy-MM-dd')
+                          .format(DateTime.parse(e['created_at'])),
+                      time: DateFormat('HH:mm')
+                          .format(DateTime.parse(e['created_at'])),
                       image: "assets/images/pharmacist3.png",
                     ),
                   )

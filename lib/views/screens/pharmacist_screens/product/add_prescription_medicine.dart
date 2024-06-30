@@ -353,6 +353,9 @@ class _AddOTCMedicinePageState extends State<AddPrescriptionMedicinePage> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
                     onPressed: () async {
+                      if (imagefile == null) {
+                        return;
+                      }
                       var data = {
                         "name": nameController.text,
                         "description": descriptionController.text,
@@ -360,8 +363,7 @@ class _AddOTCMedicinePageState extends State<AddPrescriptionMedicinePage> {
                         "desease": choosenDisease,
                         "type": "DESEASE",
                         "price": priceController.text,
-                        // "image": await MultipartFile.fromFile(imagefile!.path,
-                        //     filename: imagefile!.name),
+                        "image": await MultipartFile.fromFile(imagefile!.path),
                       };
                       Map<String, dynamic> res =
                           await Provider.of<MedicineManagementProvider>(context,

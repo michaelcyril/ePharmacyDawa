@@ -81,7 +81,7 @@ class _PharmacistPrescriptionMedicinesPageState
                                       ProductDetailsScreen(productData: value.getAllPrescriptionMedicineList[index],),
                                 ));
                           },
-                          image: "assets/images/dawa1.png",
+                          image: value.getAllPrescriptionMedicineList[index]['image'],
                           title: value.getAllPrescriptionMedicineList[index]['name'],
                           dosage: value.getAllPrescriptionMedicineList[index]['dosage'],
                           price: value.getAllPrescriptionMedicineList[index]['price'],

@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/constants/app_constants.dart';
 
 class ProductCardWidget extends StatelessWidget {
   const ProductCardWidget(
@@ -50,7 +51,9 @@ class ProductCardWidget extends StatelessWidget {
                       color: const Color(0xFF979797).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Image.asset(image),
+                    child: image == null
+                        ? Image.asset("assets/images/dawa1.png")
+                        : Image.network(AppConstants.mediaBaseUrl + image),
                   ),
                 ),
                 userRole == null

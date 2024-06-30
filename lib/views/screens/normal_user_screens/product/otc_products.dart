@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables
+// ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, avoid_types_as_parameter_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/medicine_management_provider.dart';
@@ -93,7 +93,7 @@ class _OtcProductsScreenState extends State<OtcProductsScreen> {
                                   ),
                                 ));
                           },
-                          image: "assets/images/dawa1.png",
+                          image: value.getOtcMedicineList[index]['image'],
                           title: value.getOtcMedicineList[index]['name'],
                           dosage: value.getOtcMedicineList[index]['dosage'],
                           price: value.getOtcMedicineList[index]['price'],

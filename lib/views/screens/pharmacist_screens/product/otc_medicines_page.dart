@@ -85,7 +85,7 @@ class _PharmacistOtcMedicinesScreenScreenState
                                   ),
                                 ));
                           },
-                          image: "assets/images/dawa1.png",
+                          image: value.getOtcMedicineList[index]['image'],
                           title: value.getOtcMedicineList[index]['name'],
                           dosage: value.getOtcMedicineList[index]['dosage'],
                           price: value.getOtcMedicineList[index]['price'],

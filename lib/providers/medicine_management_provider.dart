@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/constants/app_constants.dart';
+import 'package:flutter_project_template/helpers/api/api_client_dio.dart';
 import 'package:flutter_project_template/helpers/api/api_client_http.dart';
 
 class MedicineManagementProvider with ChangeNotifier {
@@ -85,7 +86,6 @@ class MedicineManagementProvider with ChangeNotifier {
         return false;
       } else {
         var body = res;
-        print(body);
         all_prescription_medicine = body;
         notifyListeners();
         return true;
@@ -98,14 +98,16 @@ class MedicineManagementProvider with ChangeNotifier {
 
   Future<Map<String, dynamic>> addMedicine(data) async {
     try {
-      var res = await ApiClientHttp(headers: <String, String>{
-        'Content-Type': 'application/json',
-      }).postRequest(AppConstants.insertGetMedicineUrl, data);
+      var res = await ApiClientDio().postRequest(
+        AppConstants.insertGetMedicineUrl,
+        data,
+      );
       if (res == null) {
         return {"save": false, "message": "Something went wrong"};
       } else {
         var body = res;
         if (body['save']) {
+          getOtcMedicines();
           return body;
         }
         return {"save": false, "message": "Something went wrong"};

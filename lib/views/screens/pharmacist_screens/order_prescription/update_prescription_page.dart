@@ -23,6 +23,7 @@ class _UpdatePrescriptionScreenState extends State<UpdatePrescriptionScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(

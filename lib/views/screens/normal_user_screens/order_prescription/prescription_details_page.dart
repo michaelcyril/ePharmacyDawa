@@ -54,7 +54,7 @@ class _OrderDetailsPageScreenState
           ),
         ),
         actions: [
-          user != null && user['role'] == "ADMIN"
+          user != null && user['role'] == "ADMIN" && widget.data['status'] == "PENDING"
               ? IconButton(
                   splashRadius: 22,
                   onPressed: () async {
@@ -67,7 +67,7 @@ class _OrderDetailsPageScreenState
                         ));
                   },
                   icon: const Icon(
-                    Icons.notifications,
+                    Icons.add_chart_rounded,
                     color: Colors.white,
                   ))
               : const SizedBox(),

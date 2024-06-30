@@ -437,7 +437,7 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                 updateCartCount: (int) {},
                                 title: "----",
                                 dosage: "----",
-                                image: "assets/image/dawa1.png",
+                                image: null,
                                 price: "---",
                               ),
                             )
@@ -462,7 +462,6 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                     addToFavorites: () {},
                                     isFavorite: true,
                                     updateCartCount: (int) {
-                                      print("object=====");
                                       Provider.of<CartManagementProvider>(
                                               context,
                                               listen: false)
@@ -470,7 +469,7 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                     },
                                     title: e['name'],
                                     dosage: e['dosage'],
-                                    image: "assets/images/dawa1.png",
+                                    image: e['image'],
                                     price: e['price'],
                                     userRole: userData['role'],
                                   ),

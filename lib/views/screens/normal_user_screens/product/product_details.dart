@@ -1,6 +1,7 @@
 // ignore_for_file: dead_code, prefer_typing_uninitialized_variables, deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/constants/app_constants.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final productData;
@@ -46,10 +47,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             width: 238,
             child: AspectRatio(
               aspectRatio: 1,
-              child: Image.asset("assets/images/dawa1.png"),
+              child: widget.productData['image'] == null
+                  ? Image.asset("assets/images/dawa1.png")
+                  : Image.network(
+                      AppConstants.mediaBaseUrl + widget.productData['image']),
             ),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Stack(
             children: [
               Column(

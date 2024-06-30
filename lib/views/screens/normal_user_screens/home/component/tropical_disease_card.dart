@@ -60,7 +60,7 @@ class TropoicalDiseaseWidget extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfMeds Medicines")
+                        // TextSpan(text: "$numOfMeds Medicines")
                       ],
                     ),
                   ),

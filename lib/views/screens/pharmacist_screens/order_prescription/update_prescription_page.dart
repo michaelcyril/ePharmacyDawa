@@ -1,9 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template/providers/user_management_provider.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/menu/normal_user_bottom_nav.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:flutter_project_template/providers/prescription_management_provider.dart';
 import 'package:provider/provider.dart';
 
 class UpdatePrescriptionScreen extends StatefulWidget {
@@ -150,24 +148,16 @@ class _UpdatePrescriptionScreenState extends State<UpdatePrescriptionScreen> {
                         "description": descriptionController.text,
                       };
                       Map<String, dynamic> res =
-                          await Provider.of<UserManagementProvider>(context,
+                          await Provider.of<PrescriptionManagementProvider>(context,
                                   listen: false)
-                              .completeProfifile(context, data);
+                              .updatePrescription(context, data);
                       if (res['update']) {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const NormalUserBottomNav(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       } else {
                         SnackBar(
                           content: Text(res['message']),
                           duration: const Duration(seconds: 3),
                         );
-                        Navigator.pop(context);
-                        Navigator.pop(context);
                       }
                     },
                     style: ElevatedButton.styleFrom(

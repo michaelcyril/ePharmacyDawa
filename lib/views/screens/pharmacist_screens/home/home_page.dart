@@ -146,7 +146,7 @@ class _PharmacistHomePageScreenState extends State<PharmacistHomePageScreen> {
                                 const PrescriptionPagePharmacistScreen(),
                           ));
                     },
-                    title: "Prescription History",
+                    title: "Prescription",
                     gradientStartColor: const Color(0xffe8eaf6),
                     gradientEndColor: const Color(0xff90a4ae),
                   ),

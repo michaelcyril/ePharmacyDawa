@@ -51,7 +51,7 @@ class _OrderPageScreenState extends State<PrescriptionPageScreen>
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         title: const Text(
           "My Prescription",
           style: TextStyle(

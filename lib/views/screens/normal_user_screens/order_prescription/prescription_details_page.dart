@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, prefer_const_literals_to_create_immutables, non_constant_identifier_names
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/constants/app_constants.dart';
-import 'package:flutter_project_template/providers/order_management_provider.dart';
+import 'package:flutter_project_template/shared-preference-manager/preference-manager.dart';
+import 'package:flutter_project_template/views/screens/pharmacist_screens/order_prescription/update_prescription_page.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class PrescriptionDetailsPageScreen extends StatefulWidget {
   final data;
@@ -23,11 +25,20 @@ class _OrderDetailsPageScreenState
     return formattedDate;
   }
 
+  var user;
+
   @override
   void initState() {
     super.initState();
-    // Provider.of<OrderManagementProvider>(context, listen: false)
-    //     .getOrderProducts(widget.data['id']);
+    getUserData();
+  }
+
+  getUserData() async {
+    var new_user = jsonDecode(
+        await SharedPreferencesManager().getString(AppConstants.user));
+    setState(() {
+      user = new_user;
+    });
   }
 
   @override
@@ -42,6 +53,25 @@ class _OrderDetailsPageScreenState
             fontSize: 20,
           ),
         ),
+        actions: [
+          user != null && user['role'] == "ADMIN"
+              ? IconButton(
+                  splashRadius: 22,
+                  onPressed: () async {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdatePrescriptionScreen(
+                            prescriptionId: widget.data['id'],
+                          ),
+                        ));
+                  },
+                  icon: const Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                  ))
+              : const Text("D"),
+        ],
         centerTitle: true,
         elevation: 5,
         toolbarHeight: 60,
@@ -201,7 +231,7 @@ class _OrderDetailsPageScreenState
               ),
               Divider(),
               Image.network(
-                AppConstants.mediaBaseUrl+widget.data['image'],
+                AppConstants.mediaBaseUrl + widget.data['image'],
                 height: 200,
                 width: 200,
               ),

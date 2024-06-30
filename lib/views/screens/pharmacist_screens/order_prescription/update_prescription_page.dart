@@ -144,7 +144,7 @@ class _UpdatePrescriptionScreenState extends State<UpdatePrescriptionScreen> {
                     onPressed: () async {
                       var data = {
                         "id": widget.prescriptionId,
-                        "price": priceController.text,
+                        "total_price": priceController.text,
                         "description": descriptionController.text,
                       };
                       Map<String, dynamic> res =
@@ -152,6 +152,7 @@ class _UpdatePrescriptionScreenState extends State<UpdatePrescriptionScreen> {
                                   listen: false)
                               .updatePrescription(context, data);
                       if (res['update']) {
+                        Navigator.pop(context);
                         Navigator.pop(context);
                       } else {
                         SnackBar(

@@ -198,6 +198,7 @@ class PrescriptionManagementProvider with ChangeNotifier {
       } else {
         var body = res;
         if (body['update']) {
+          pharmacistPendingPrescriptions();
           return body;
         }
         return {'update': false, 'message': 'Something went wrong'};

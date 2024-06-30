@@ -70,7 +70,7 @@ class _OrderDetailsPageScreenState
                     Icons.notifications,
                     color: Colors.white,
                   ))
-              : const Text("D"),
+              : const SizedBox(),
         ],
         centerTitle: true,
         elevation: 5,
@@ -149,6 +149,66 @@ class _OrderDetailsPageScreenState
                   Expanded(
                     child: Text(
                       "CASH",
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
+                          color: Colors.black45),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Divider(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Description",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Colors.black),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      widget.data['description'] == null
+                          ? "---"
+                          :
+                      widget.data['description'].toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
+                          color: Colors.black45),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Divider(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Total Amount",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Colors.black),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      widget.data['total_price'] == null
+                          ? "--- TZS"
+                          :
+                      "${widget.data['total_price']} TZS",
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,

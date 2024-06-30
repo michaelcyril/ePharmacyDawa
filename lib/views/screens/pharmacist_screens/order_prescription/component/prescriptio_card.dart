@@ -24,10 +24,12 @@ class PharmacistPrescriptionCardWidget extends StatefulWidget {
   final data;
 
   @override
-  State<PharmacistPrescriptionCardWidget> createState() => _PrescriptionCardWidgetState();
+  State<PharmacistPrescriptionCardWidget> createState() =>
+      _PrescriptionCardWidgetState();
 }
 
-class _PrescriptionCardWidgetState extends State<PharmacistPrescriptionCardWidget> {
+class _PrescriptionCardWidgetState
+    extends State<PharmacistPrescriptionCardWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -109,9 +111,13 @@ class _PrescriptionCardWidgetState extends State<PharmacistPrescriptionCardWidge
                         padding: const EdgeInsets.only(right: 10),
                         child: InkWell(
                           onTap: () {
-                            Provider.of<PrescriptionManagementProvider>(context,
-                                    listen: false)
-                                .acceptPrescription(widget.data['id']);
+                            if (widget.data['description'] != null ||
+                                widget.data['total_price'] != null) {
+                              Provider.of<PrescriptionManagementProvider>(
+                                      context,
+                                      listen: false)
+                                  .acceptPrescription(widget.data['id']);
+                            }
                           },
                           child: Container(
                             height: 40,
@@ -145,7 +151,8 @@ class _PrescriptionCardWidgetState extends State<PharmacistPrescriptionCardWidge
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      PrescriptionDetailsPageScreen(data: widget.data),
+                                      PrescriptionDetailsPageScreen(
+                                          data: widget.data),
                                 ));
                           },
                           child: Container(

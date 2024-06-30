@@ -33,22 +33,27 @@ class _PendingOrderTabState extends State<CompleteOrderTab> {
     return Consumer<OrderManagementProvider>(builder: (context, value, child) {
       return value.getClientOrderHistoryList.isEmpty
           ? const Center(child: Text("No Order History"))
-          : Column(
-              children: value.getClientOrderHistoryList
-                  .map<Widget>(
-                    (e) => OrderCardCompleteWidget(
-                      data: e,
-                      confirmation: "",
-                      mainText: "Order ID: ${e['order_id']}",
-                      orderNo: e['status'],
-                      date: DateFormat('yyyy-MM-dd')
-                          .format(DateTime.parse(e['created_at'])),
-                      time: DateFormat('HH:mm')
-                          .format(DateTime.parse(e['created_at'])),
-                      image: "assets/images/pharmacist3.png",
-                    ),
-                  )
-                  .toList());
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:200.0),
+                child: Column(
+                    children: value.getClientOrderHistoryList
+                        .map<Widget>(
+                          (e) => OrderCardCompleteWidget(
+                            data: e,
+                            confirmation: "",
+                            mainText: "Order ID: ${e['order_id']}",
+                            orderNo: e['status'],
+                            date: DateFormat('yyyy-MM-dd')
+                                .format(DateTime.parse(e['created_at'])),
+                            time: DateFormat('HH:mm')
+                                .format(DateTime.parse(e['created_at'])),
+                            image: "assets/images/pharmacist3.png",
+                          ),
+                        )
+                        .toList()),
+              ),
+            );
     });
   }
 }

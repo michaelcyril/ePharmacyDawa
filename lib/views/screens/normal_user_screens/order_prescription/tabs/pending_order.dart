@@ -34,22 +34,25 @@ class _PendingOrderTabState extends State<PendingOrderTab> {
       return value.getClientPendiOrderList.isEmpty
           ? const Center(child: Text("No Pending Order"))
           : SingleChildScrollView(
-              child: Column(
-                  children: value.getClientPendiOrderList
-                      .map<Widget>(
-                        (e) => OrderCardWidget(
-                          data: e,
-                          confirmation: "",
-                          mainText: "Order ID: ${e['order_id']}",
-                          orderNo: e['status'],
-                          date: DateFormat('yyyy-MM-dd')
-                              .format(DateTime.parse(e['created_at'])),
-                          time: DateFormat('HH:mm')
-                              .format(DateTime.parse(e['created_at'])),
-                          image: "assets/images/pharmacist3.png",
-                        ),
-                      )
-                      .toList()),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:200.0),
+                child: Column(
+                    children: value.getClientPendiOrderList
+                        .map<Widget>(
+                          (e) => OrderCardWidget(
+                            data: e,
+                            confirmation: "",
+                            mainText: "Order ID: ${e['order_id']}",
+                            orderNo: e['status'],
+                            date: DateFormat('yyyy-MM-dd')
+                                .format(DateTime.parse(e['created_at'])),
+                            time: DateFormat('HH:mm')
+                                .format(DateTime.parse(e['created_at'])),
+                            image: "assets/images/pharmacist3.png",
+                          ),
+                        )
+                        .toList()),
+              ),
             );
     });
   }

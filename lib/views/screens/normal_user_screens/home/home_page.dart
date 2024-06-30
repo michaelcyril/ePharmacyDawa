@@ -8,6 +8,7 @@ import 'package:flutter_project_template/providers/user_management_provider.dart
 import 'package:flutter_project_template/views/screens/normal_user_screens/cart/cart_page.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/product_card_widget.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/home/component/tropical_disease_card.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/prescription_page.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/upload_prescription.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/disease_products.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/product/otc_products.dart';
@@ -110,7 +111,9 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                       // const SizedBox(width: 8),
                       IconButtonWIthCounter(
                         image: "assets/images/cart.png",
-                        numOfitem: Provider.of<CartManagementProvider>(context, listen: true).itemCount,
+                        numOfitem: Provider.of<CartManagementProvider>(context,
+                                listen: true)
+                            .itemCount,
                         press: () {
                           Navigator.push(
                               context,
@@ -221,6 +224,34 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
             ),
           ),
           const SizedBox(height: 20),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Prescription Orders",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PrescriptionPageScreen()),
+                    );
+                  },
+                  style: TextButton.styleFrom(foregroundColor: Colors.grey),
+                  child: const Text("view"),
+                ),
+              ],
+            ),
+          ),
           GestureDetector(
             onTap: () {
               Navigator.push(

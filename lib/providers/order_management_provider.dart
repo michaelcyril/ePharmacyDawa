@@ -255,4 +255,30 @@ class OrderManagementProvider with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> cancelOrder(orderId) async {
+    try {
+      var data = {
+        'id': orderId,
+        'status': 'CANCELED',
+      };
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).postRequest(AppConstants.updateOrderStatusUrl, data);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body['success']) {
+          pharmacistPendingOrders();
+          pharmacistOrdersHistory();
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }

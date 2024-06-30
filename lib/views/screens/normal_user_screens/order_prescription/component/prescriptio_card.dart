@@ -1,12 +1,12 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project_template/providers/order_management_provider.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/order_details_page.dart';
+import 'package:flutter_project_template/providers/prescription_management_provider.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/prescription_details_page.dart';
 import 'package:provider/provider.dart';
 
-class OrderCardWidget extends StatefulWidget {
-  const OrderCardWidget(
+class PrescriptionCardWidget extends StatefulWidget {
+  const PrescriptionCardWidget(
       {super.key,
       required this.mainText,
       required this.orderNo,
@@ -24,10 +24,10 @@ class OrderCardWidget extends StatefulWidget {
   final data;
 
   @override
-  State<OrderCardWidget> createState() => _OrderCardWidgetState();
+  State<PrescriptionCardWidget> createState() => _PrescriptionCardWidgetState();
 }
 
-class _OrderCardWidgetState extends State<OrderCardWidget> {
+class _PrescriptionCardWidgetState extends State<PrescriptionCardWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -109,9 +109,9 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                         padding: const EdgeInsets.only(right: 10),
                         child: InkWell(
                           onTap: () {
-                            Provider.of<OrderManagementProvider>(context,
+                            Provider.of<PrescriptionManagementProvider>(context,
                                     listen: false)
-                                .cancelOrder(widget.data['id']);
+                                .cancelPrescription(widget.data['id']);
                           },
                           child: Container(
                             height: 40,
@@ -145,7 +145,7 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      OrderDetailsPageScreen(data: widget.data),
+                                      PrescriptionDetailsPageScreen(data: widget.data),
                                 ));
                           },
                           child: Container(

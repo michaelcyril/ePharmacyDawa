@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, use_build_context_synchronously
+// ignore_for_file: prefer_final_fields, use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'dart:io';
 
@@ -27,8 +27,16 @@ class _UploadPrescriptionScreenState extends State<UploadPrescriptionScreen> {
       userData = data;
     });
   }
+
   List<File> _prescriptions = [];
   List<bool> _selected = [];
+
+  @override
+  void initState() {
+    super.initState();
+    setUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,10 +166,12 @@ class _UploadPrescriptionScreenState extends State<UploadPrescriptionScreen> {
           const Divider(),
           GestureDetector(
             onTap: () async {
+              if (_prescriptions.isEmpty) {
+                return;
+              }
               var data = {
                 "user": userData['id'],
-                "image": await MultipartFile.fromFile(_prescriptions[0].path,
-                    filename: XFile(_prescriptions[0].path).name),
+                "image": await MultipartFile.fromFile(_prescriptions[0].path),
               };
               Map<String, dynamic> res =
                   await Provider.of<PrescriptionManagementProvider>(context,

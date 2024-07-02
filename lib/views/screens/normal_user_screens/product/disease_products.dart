@@ -97,12 +97,12 @@ class _DiseaseProductPageState extends State<DiseaseProductPage> {
                                   ),
                                 ));
                           },
-                          image: "assets/images/dawa1.png",
+                          image: value.getDiseaseMedicineList[index]['name'],
                           title: value.getDiseaseMedicineList[index]['name'],
                           dosage: value.getDiseaseMedicineList[index]['dosage'],
                           price: value.getDiseaseMedicineList[index]['price'],
                           isFavorite: false,
-                          userRole: userData['role'],
+                          userRole: userData == null ? null : userData['role'],
                           updateCartCount: (int) {},
                         ),
                       );

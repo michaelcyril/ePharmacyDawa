@@ -53,7 +53,7 @@ class ProductCardWidget extends StatelessWidget {
                     ),
                     child: image == null
                         ? Image.asset("assets/images/dawa1.png")
-                        : Image.network(AppConstants.mediaBaseUrl + image),
+                        : Image.network('${AppConstants.mediaBaseUrl}$image'),
                   ),
                 ),
                 userRole == null

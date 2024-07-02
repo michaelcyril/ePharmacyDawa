@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_if_null_operators
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
@@ -88,19 +88,19 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
               },
             ),
             ProfileMenuWidget(
-              text: userData['phone'],
+              text: userData == null ? "---" : userData['phone'],
               icon: "assets/icons/Phone.svg",
               color: const Color.fromARGB(255, 0, 136, 102),
               press: () {},
             ),
             ProfileMenuWidget(
-              text: userData['gender'],
+              text: userData == null ? "---" : userData['gender'],
               icon: "assets/icons/Gender.svg",
               color: const Color.fromARGB(255, 0, 136, 102),
               press: () {},
             ),
             ProfileMenuWidget(
-              text: userData['role'],
+              text: userData == null ? "---" : userData['role'],
               icon: "assets/icons/Category.svg",
               color: const Color.fromARGB(255, 0, 136, 102),
               press: () {},

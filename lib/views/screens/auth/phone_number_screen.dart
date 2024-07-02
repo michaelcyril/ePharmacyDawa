@@ -104,10 +104,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     onPressed: () async {
                       String inputNumber = textFieldController.text.trim();
                       // String pharmacistNumber = "769190100";
-                      var data = {
-                        "phone": inputNumber,
-                        "role": "NORMAL"
-                      };
+                      var data = {"phone": '255$inputNumber', "role": "NORMAL"};
                       bool result = await Provider.of<UserManagementProvider>(
                               context,
                               listen: false)
@@ -116,7 +113,9 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => OtpScreen(phone: inputNumber,),
+                              builder: (context) => OtpScreen(
+                                phone: '255$inputNumber',
+                              ),
                             ));
                       }
                     },
@@ -138,52 +137,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
-                const Divider(),
-                const SizedBox(height: 10),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 02,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    border: Border.all(color: Colors.black12),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            width: MediaQuery.of(context).size.width * 0.07,
-                            child: Image.asset(
-                              "assets/images/google.png",
-                              filterQuality: FilterQuality.high,
-                            ),
-                          ),
-                        ),
-                        const Expanded(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Sign in with Google",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 44, 44, 44),
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 10,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                        )
-                      ]),
-                ),
-                const SizedBox(height: 120),
+                const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

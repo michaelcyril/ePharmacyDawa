@@ -89,38 +89,6 @@ class _OtpScreenState extends State<OtpScreen> {
               const SizedBox(
                 height: 45,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    child: Row(
-                      children: [
-                        // Icon(
-                        //   CupertinoIcons.arrow_clockwise,
-                        //   size: 18.0, // Adjust the size as needed
-                        //   color: Colors.grey[900],
-                        // ),
-                        const SizedBox(
-                            width: 4.0), // Adjust spacing between icon and text
-                        Text(
-                          "Resend",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      // Add your onTap functionality here
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 50,
-              ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.07,
                 width: MediaQuery.of(context).size.width * 0.9,

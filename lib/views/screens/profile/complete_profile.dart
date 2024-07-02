@@ -254,13 +254,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                   listen: false)
                               .completeProfifile(context, data);
                       if (res['update']) {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const NormalUserBottomNav(),
-                          ),
-                        );
+                        Navigator.pop(context);
+                        Navigator.pop(context);
                       } else {
                         SnackBar(
                           content: Text(res['message']),

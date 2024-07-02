@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/constants/app_constants.dart';
 
 class DiseaseProductCardWidget extends StatelessWidget {
   const DiseaseProductCardWidget(
@@ -48,7 +49,7 @@ class DiseaseProductCardWidget extends StatelessWidget {
                       color: const Color(0xFF979797).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Image.asset(image),
+                    child: Image.network('${AppConstants.mediaBaseUrl}${disease['image']}'),
                   ),
                 ),
               ],

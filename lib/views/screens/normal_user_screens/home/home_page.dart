@@ -471,7 +471,7 @@ class _HomePageScreenState extends State<HomePageNormalUserScreen> {
                                     dosage: e['dosage'],
                                     image: e['image'],
                                     price: e['price'],
-                                    userRole: userData['role'],
+                                    userRole: userData == null ? null : userData['role'],
                                   ),
                                 ))
                             .toList(),

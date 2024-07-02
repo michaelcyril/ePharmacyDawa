@@ -105,7 +105,7 @@ class _RecentChatsState extends State<RecentChats> {
                         .createChat(data);
                   },
                   icon: const Icon(
-                    Icons.notifications,
+                    Icons.add_comment,
                     color: Colors.white,
                   ))
               : SizedBox(),

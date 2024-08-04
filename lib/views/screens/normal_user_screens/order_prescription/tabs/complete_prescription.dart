@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_template/providers/prescription_management_provider.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/component/order_card.dart';
+import 'package:flutter_project_template/views/screens/normal_user_screens/order_prescription/component/prescriptio_card.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CompletePrescriptionTab extends StatefulWidget {
@@ -38,14 +39,17 @@ class _PendingOrderTabState extends State<CompletePrescriptionTab> {
               child: Column(
                   children: value.getClientPrescriptionHistoryList
                       .map<Widget>(
-                        (e) => const OrderCardWidget(
-                          confirmation: "Pending",
-                          mainText: "Prescription 1",
-                          orderNo: "ID8239",
-                          date: "10/04/2024",
-                          time: "10:30 AM",
-                          image: "assets/images/pharmacist3.png",
-                        ),
+                          (e) => PrescriptionCardWidget(
+                            data: e,
+                            confirmation: e['status'],
+                            mainText: e['prescription_id'],
+                            orderNo: e['user']['gender'],
+                            date: DateFormat('yyyy-MM-dd')
+                                .format(DateTime.parse(e['created_at'])),
+                            time: DateFormat('HH:mm')
+                                .format(DateTime.parse(e['created_at'])),
+                            image: "assets/images/pharmacist3.png",
+                          ),
                       )
                       .toList()),
             ),

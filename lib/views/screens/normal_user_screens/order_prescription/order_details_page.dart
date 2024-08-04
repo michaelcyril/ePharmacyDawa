@@ -23,8 +23,9 @@ class _OrderDetailsPageScreenState extends State<OrderDetailsPageScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<OrderManagementProvider>(context, listen: false)
-        .getOrderProducts(widget.data['id']);
+    print(widget.data);
+    // Provider.of<OrderManagementProvider>(context, listen: false)
+    //     .getOrderProducts(widget.data['id']);
   }
 
   @override

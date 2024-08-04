@@ -54,23 +54,25 @@ class _OrderDetailsPageScreenState
           ),
         ),
         actions: [
-          user != null && user['role'] == "ADMIN" && widget.data['status'] == "PENDING"
-              ? IconButton(
-                  splashRadius: 22,
-                  onPressed: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdatePrescriptionScreen(
-                            prescriptionId: widget.data['id'],
-                          ),
-                        ));
-                  },
-                  icon: const Icon(
-                    Icons.add_chart_rounded,
-                    color: Colors.white,
-                  ))
-              : const SizedBox(),
+          user == null
+              ? SizedBox()
+              : user['role'] == "ADMIN" && widget.data['status'] == "PENDING"
+                  ? IconButton(
+                      splashRadius: 22,
+                      onPressed: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UpdatePrescriptionScreen(
+                                prescriptionId: widget.data['id'],
+                              ),
+                            ));
+                      },
+                      icon: const Icon(
+                        Icons.add_chart_rounded,
+                        color: Colors.white,
+                      ))
+                  : const SizedBox(),
         ],
         centerTitle: true,
         elevation: 5,
@@ -177,8 +179,7 @@ class _OrderDetailsPageScreenState
                     child: Text(
                       widget.data['description'] == null
                           ? "---"
-                          :
-                      widget.data['description'].toString(),
+                          : widget.data['description'].toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
@@ -207,8 +208,7 @@ class _OrderDetailsPageScreenState
                     child: Text(
                       widget.data['total_price'] == null
                           ? "--- TZS"
-                          :
-                      "${widget.data['total_price']} TZS",
+                          : "${widget.data['total_price']} TZS",
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,

@@ -144,7 +144,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     const Text(
                       "By continuing you agree to ",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: Colors.black87,
                       ),
                     ),
@@ -153,7 +153,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       child: const Text(
                         "Terms and Conditions",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Color.fromARGB(255, 3, 190, 150),
                           fontWeight: FontWeight.w500,
                         ),
@@ -167,7 +167,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     const Text(
                       "and ",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: Colors.black87,
                       ),
                     ),
@@ -176,7 +176,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       child: const Text(
                         "Privacy Policy",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Color.fromARGB(255, 3, 190, 150),
                           fontWeight: FontWeight.w500,
                         ),
@@ -185,7 +185,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                     const Text(
                       " of ePharmacy",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: Colors.black87,
                       ),
                     ),

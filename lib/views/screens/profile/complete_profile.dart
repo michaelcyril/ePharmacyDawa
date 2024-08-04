@@ -255,14 +255,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                               .completeProfifile(context, data);
                       if (res['update']) {
                         Navigator.pop(context);
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       } else {
                         SnackBar(
                           content: Text(res['message']),
                           duration: const Duration(seconds: 3),
                         );
                         Navigator.pop(context);
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       }
                     },
                     style: ElevatedButton.styleFrom(

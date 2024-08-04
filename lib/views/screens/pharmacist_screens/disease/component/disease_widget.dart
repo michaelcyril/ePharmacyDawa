@@ -56,7 +56,7 @@ class DiseaseWidgetCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextSpan(text: "$numOfMeds Medicines")
+                      // TextSpan(text: "Medicines")
                     ],
                   ),
                 ),

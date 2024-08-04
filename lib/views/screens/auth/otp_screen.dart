@@ -114,7 +114,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         );
                       } else if (res['user']['role'] == 'NORMAL') {
                         if (res['user']['gender'] == null) {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             PageTransition(
                               type: PageTransitionType.fade,

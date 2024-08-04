@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_template/constants/app_constants.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/shared-preference-manager/preference-manager.dart';
-import 'package:flutter_project_template/views/screens/normal_user_screens/menu/normal_user_bottom_nav.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class CompleteProfileScreen extends StatefulWidget {

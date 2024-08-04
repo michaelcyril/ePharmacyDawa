@@ -31,7 +31,14 @@ class _PrescriptionCardWidgetState extends State<PrescriptionCardWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  PrescriptionDetailsPageScreen(data: widget.data),
+            ));
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Container(
@@ -104,73 +111,82 @@ class _PrescriptionCardWidgetState extends State<PrescriptionCardWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: InkWell(
-                          onTap: () {
-                            Provider.of<PrescriptionManagementProvider>(context,
-                                    listen: false)
-                                .cancelPrescription(widget.data['id']);
-                          },
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 232, 233, 233),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Cancel",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(255, 61, 61, 61),
+                    widget.confirmation == "COMPLETE"
+                        ? const Expanded(
+                            child: SizedBox(),
+                          )
+                        : Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  Provider.of<PrescriptionManagementProvider>(
+                                          context,
+                                          listen: false)
+                                      .cancelPrescription(widget.data['id']);
+                                },
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        255, 232, 233, 233),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Cancel",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          color:
+                                              Color.fromARGB(255, 61, 61, 61),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      PrescriptionDetailsPageScreen(data: widget.data),
-                                ));
-                          },
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 4, 190, 144),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Via Details",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(255, 252, 252, 252),
+                    widget.confirmation == "PENDING"
+                        ? Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  Provider.of<PrescriptionManagementProvider>(
+                                          context,
+                                          listen: false)
+                                      .proceedPrescription(widget.data['id']);
+                                },
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(255, 4, 190, 144),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Confirm",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color.fromARGB(
+                                              255, 252, 252, 252),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
+                          )
+                        : const Expanded(child: SizedBox()),
                   ],
                 ),
               )

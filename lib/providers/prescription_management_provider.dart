@@ -278,4 +278,28 @@ class PrescriptionManagementProvider with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> proceedPrescription(orderId) async {
+    try {
+      var data = {
+        'id': orderId,
+        'status_to': 'PROCEED',
+      };
+      var res = await ApiClientHttp(headers: <String, String>{
+        'Content-Type': 'application/json',
+      }).postRequest(AppConstants.changePrescriptionStatusUrl, data);
+      if (res == null) {
+        return false;
+      } else {
+        var body = res;
+        if (body['change']) {
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }

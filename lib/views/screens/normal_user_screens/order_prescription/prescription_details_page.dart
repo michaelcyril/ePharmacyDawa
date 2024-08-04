@@ -56,7 +56,7 @@ class _OrderDetailsPageScreenState
         actions: [
           user == null
               ? SizedBox()
-              : user['role'] == "ADMIN" && widget.data['status'] == "PENDING"
+              : user['role'] == "ADMIN" && (widget.data['status'] == "PENDING" || widget.data['status'] == "PROCEED")
                   ? IconButton(
                       splashRadius: 22,
                       onPressed: () async {

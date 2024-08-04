@@ -58,8 +58,8 @@ class UserManagementProvider with ChangeNotifier {
         print(body);
         if (body['success']) {
           var sharedPref = SharedPreferencesManager();
-          sharedPref.saveString(AppConstants.user, json.encode(body['user']));
-          sharedPref.saveString(AppConstants.token, json.encode(body['token']));
+          await sharedPref.saveString(AppConstants.user, json.encode(body['user']));
+          await sharedPref.saveString(AppConstants.token, json.encode(body['token']));
           setUserData();
           return body;
         }

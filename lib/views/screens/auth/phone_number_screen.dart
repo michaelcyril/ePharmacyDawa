@@ -110,7 +110,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                               listen: false)
                           .verifyPhone(context, data);
                       if (result) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => OtpScreen(

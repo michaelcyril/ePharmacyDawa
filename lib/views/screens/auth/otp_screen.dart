@@ -1,7 +1,10 @@
 // ignore_for_file: unused_import, sized_box_for_whitespace, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_template/constants/app_constants.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
+import 'package:flutter_project_template/shared-preference-manager/preference-manager.dart';
+import 'package:flutter_project_template/views/screens/auth/phone_number_screen.dart';
 import 'package:flutter_project_template/views/screens/normal_user_screens/menu/normal_user_bottom_nav.dart';
 import 'package:flutter_project_template/views/screens/profile/complete_profile.dart';
 import 'package:flutter_project_template/views/screens/pharmacist_screens/menu/pharmacist_bottom_nav.dart';
@@ -30,7 +33,10 @@ class _OtpScreenState extends State<OtpScreen> {
             child: Image.asset("assets/icons/back2.png"),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PhoneNumberScreen()));
           },
         ),
         centerTitle: true,
@@ -103,6 +109,9 @@ class _OtpScreenState extends State<OtpScreen> {
                       context,
                       listen: false,
                     ).verifyOtp(context, data);
+                    print("=====================================");
+                    print(res);
+                    print("=====================================");
                     if (res['success']) {
                       if (res['user']['role'] == 'ADMIN') {
                         Navigator.pushReplacement(
@@ -114,7 +123,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         );
                       } else if (res['user']['role'] == 'NORMAL') {
                         if (res['user']['gender'] == null) {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             PageTransition(
                               type: PageTransitionType.fade,

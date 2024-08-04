@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_template/constants/app_constants.dart';
 import 'package:flutter_project_template/providers/user_management_provider.dart';
 import 'package:flutter_project_template/shared-preference-manager/preference-manager.dart';
+import 'package:flutter_project_template/views/screens/auth/phone_number_screen.dart';
 import 'package:provider/provider.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
@@ -236,7 +237,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
                     onPressed: () async {
-                      print("============");
                       var sharedPref = SharedPreferencesManager();
                       var userId = json.decode(
                           await sharedPref.getString(AppConstants.user));
@@ -252,15 +252,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                   listen: false)
                               .completeProfifile(context, data);
                       if (res['update']) {
-                        Navigator.pop(context);
-                        // Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PhoneNumberScreen()));
                       } else {
                         SnackBar(
                           content: Text(res['message']),
                           duration: const Duration(seconds: 3),
                         );
-                        Navigator.pop(context);
-                        // Navigator.pop(context);
                       }
                     },
                     style: ElevatedButton.styleFrom(
